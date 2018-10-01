@@ -10,6 +10,7 @@ namespace Gymlog.Models
     {
         [Required]
         [EmailAddress]
+        [Display(Name = "Email")]
         public string Email { get; set; }
     }
 }
