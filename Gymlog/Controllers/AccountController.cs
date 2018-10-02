@@ -88,7 +88,15 @@ namespace Gymlog.Controllers
                 if(userName.Contains("@")) // are the using their email to login
                 {
                     var user = await _userManager.FindByEmailAsync(model.UserName);
-                    userName = user?.UserName ?? ""; // set username to user.UserName if user.UserName != null else make ""
+                    if (user.UserName != null)
+                    {
+                        userName = user.UserName;
+                    }
+                    else
+                    {
+                        userName = "";
+                    }
+                    //userName = user?.UserName ?? ""; // set username to user.UserName if user.UserName != null else make ""
                 }
 
                 if (userName == "")
@@ -97,7 +105,7 @@ namespace Gymlog.Controllers
                 }
                 else
                 {
-                    var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password,
+                    var result = await _signInManager.PasswordSignInAsync(userName, model.Password,
                         isPersistent: true, lockoutOnFailure: true);
 
                     if(result.Succeeded)
