@@ -170,5 +170,9 @@ namespace Gymlog.Controllers
                 ModelState.AddModelError("", error.Description);
             }
         }
+        public IActionResult AddWorkout()
+        {
+            return View();
+        }
     }
 }

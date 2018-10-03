@@ -1,0 +1,117 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/Add_Workout.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+</head>
+
+<body>
+
+    <h2>In-Progress</h2>
+    <h3>An Exercise</h3>
+    <div class="row">
+        <table>
+            <tr>
+                <th></th>
+                <th>#</th>
+                <th>Sets</th>
+                <th>Reps</th>
+                <th>Rest</th>
+            </tr>
+            <tr v-for="(row,k) in row_info" :key="k">
+                <td scope="row">
+                    <i class="fa fa-trash" v-on:click="delRow(k,row)"></i>
+                </td>
+                <td>
+                    <input class="form-control" type="number" v-model="row.set_num" readonly="readonly" />
+                </td>
+                <td>
+                    <input class="form-control" type="text" v-model="row.num_of_sets" />
+                </td>
+                <td>
+                    <input class="form-control" type="text" v-model="row.num_of_reps" />
+                </td>
+                <td>
+                    <input class="form-control" type="text" v-model="row.rest_time" />
+                </td>
+            </tr>
+        </table>
+        <button type="button" class="btn btn-info">
+            <i class="fa fa-plus"></i>
+            Add Exercise
+        </button>
+        <button type='button' class="btn btn-info" v-on:click="addRow">
+            <i class="fa fa-plus"></i>
+            Add Row
+        </button>
+
+        <button type="button" class="btn btn-info" v-on:click="addTable"></button>
+        <div class="row" v-html="tables"></div>
+    </div>
+</body>
+
+<script>
+    let data = new Vue({
+        el: ".row",
+        data: {
+            tables: [{
+                table: ''
+            }],
+            //table: '',
+            set_number: 2,
+            row_info: [{
+                set_num: "1",
+                num_of_sets: "",
+                num_of_reps: "",
+                rest_time: ""
+            }],
+        },
+        methods: {
+            addRow: function () {
+                this.row_info.push({
+                    set_num: this.set_number++,
+                    num_of_sets: "",
+                    num_of_reps: "",
+                    rest_time: ""
+                });
+            },
+            delRow: function (k,row) {
+                let row_index = this.row_info.indexOf(row);
+                if (row_index > 0) {
+                    this.row_info.splice(row_index, 1);
+                }
+                this.set_number = 1;
+                for (let i in this.row_info) {
+                    console.log(i);
+                    this.row_info[i].set_num = this.set_number;
+                    this.set_number++;
+                }
+            },
+            addTable: function () {
+                this.tables.push({ table: document.querySelector(".row") });
+                //document.getElementById("addtable").innerHTML = this.table;
+                //console.log(this.table);
+            }
+        }
+    });
+
+</script>
+<!--<script type="text/javascript">
+        function addTable() {
+    var html = "<table><tr><td>123</td><td>456</td></tr></table>";
+        document.getElementById("addtable").innerHTML = html;
+    }
+</script> -->
+
+</html>
