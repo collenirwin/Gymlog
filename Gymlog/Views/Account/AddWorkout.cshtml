@@ -3,11 +3,6 @@
 *@
 @{
 }
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,8 +19,7 @@
         <table>
             <tr>
                 <th></th>
-                <th>#</th>
-                <th>Sets</th>
+                <th>Set</th>
                 <th>Reps</th>
                 <th>Rest</th>
             </tr>
@@ -37,9 +31,6 @@
                     <input class="form-control" type="number" v-model="row.set_num" readonly="readonly" />
                 </td>
                 <td>
-                    <input class="form-control" type="text" v-model="row.num_of_sets" />
-                </td>
-                <td>
                     <input class="form-control" type="text" v-model="row.num_of_reps" />
                 </td>
                 <td>
@@ -47,7 +38,7 @@
                 </td>
             </tr>
         </table>
-        <button type="button" class="btn btn-info">
+        <button type="button" class="btn btn-info" v-on:click="addTable">
             <i class="fa fa-plus"></i>
             Add Exercise
         </button>
@@ -55,9 +46,12 @@
             <i class="fa fa-plus"></i>
             Add Row
         </button>
+        <div class="row" v-for="tab in tables">
+            <div v-html="tab.table"></div>
 
-        <button type="button" class="btn btn-info" v-on:click="addTable"></button>
-        <div class="row" v-html="tables"></div>
+
+
+        </div>
     </div>
 </body>
 
@@ -68,22 +62,21 @@
             tables: [{
                 table: ''
             }],
-            //table: '',
             set_number: 2,
             row_info: [{
                 set_num: "1",
-                num_of_sets: "",
                 num_of_reps: "",
-                rest_time: ""
+                rest_time: "",
+                comment:""
             }],
         },
         methods: {
             addRow: function () {
                 this.row_info.push({
                     set_num: this.set_number++,
-                    num_of_sets: "",
                     num_of_reps: "",
-                    rest_time: ""
+                    rest_time: "",
+                    comment:""
                 });
             },
             delRow: function (k,row) {
@@ -99,9 +92,38 @@
                 }
             },
             addTable: function () {
-                this.tables.push({ table: document.querySelector(".row") });
-                //document.getElementById("addtable").innerHTML = this.table;
-                //console.log(this.table);
+                this.tables.push({
+                    table: '\
+                    < div class= "row" > \
+                        <table>\
+                            < tr >\
+                                <th></th>\
+                                <th>Set</th>\
+                                <th>Reps</th>\
+                                <th>Rest</th>\
+                            </tr>\
+                            < tr v-for= "(row,k) in row_info" : key="k" >\
+                                <td scope="row">\
+                                    <i class="fa fa-trash" v-on: click="delRow(k,row)"></i>\
+                                </td >\
+                                <td>\
+                                    <input class="form-control" type="number" v-model="row.set_num" readonly="readonly" />\
+                                </td>\
+                                <td>\
+                                    <input class="form-control" type="text" v-model="row.num_of_reps" />\
+                                </td>\
+                                <td>\
+                                    <input class="form-control" type="text" v-model="row.rest_time" />\
+                                </td>\
+                            </tr >\
+                        </table >\
+                        <button type="button" class="btn btn-info" v-on: click="addRow">\
+                            <i class="fa fa-plus"></i>\
+                                Add Row\
+                        </button>\
+                </div>'
+
+                });
             }
         }
     });
