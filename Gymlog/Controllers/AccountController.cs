@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Gymlog.Models;
+using Gymlog.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,12 +15,16 @@ namespace Gymlog.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly EmailSender _emailSender;
 
-        public AccountController(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+        public AccountController(
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            EmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailSender = emailSender;
         }
 
         [HttpGet]
@@ -52,6 +57,7 @@ namespace Gymlog.Controllers
                 if(result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: true);
+                    SendConfirmationEmail(user);
                     return redirectToLocal(returnUrl);
                 }
                 addErrors(result);
@@ -139,6 +145,27 @@ namespace Gymlog.Controllers
         {
             return View();
         }
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (userId != null && token != null)
+            {
+                // get user by id
+                var user = await _userManager.FindByEmailAsync(userId);
+
+                if (user != null)
+                {
+                    // confirm email based on given toekn
+                    var result = await _userManager.ConfirmEmailAsync(user, token);
+                    if (result.Succeeded)
+                    {
+                        return View();
+                    }
+                }
+            }
+            return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
         //[HttpPost]
         //[AllowAnonymous]
         //public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model, string returnUrl = null)
@@ -150,7 +177,20 @@ namespace Gymlog.Controllers
         //        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
         //    }
         //}
+        private async void SendConfirmationEmail(ApplicationUser user) 
+        {
+            // generate token
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
+            // create the confimation url with user ID and the toekn
+            string confimationUrl = generateTokenUrl(nameof(ConfirmEmail), user.Id, token, Request.Scheme);
+
+            //sender off
+            _emailSender.SendEmailAsync(user.Email, "Confirming Gymlog Email Address",
+                "This is your confirmation link for Gymlog. <br>" +
+                "<a href='" + confimationUrl + "'> Click here to confirm email. </a>");
+
+        }
         private IActionResult redirectToLocal(string url)
         {
             if (Url.IsLocalUrl(url))
@@ -162,7 +202,14 @@ namespace Gymlog.Controllers
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
         }
-
+        private string generateTokenUrl(string actionName,string userId, string token,string scheme)
+        {
+            return Url.Action(
+                action: actionName,
+                controller: "Account",
+                values: new { userId, token },
+                protocol: scheme);
+        }
         private void addErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)

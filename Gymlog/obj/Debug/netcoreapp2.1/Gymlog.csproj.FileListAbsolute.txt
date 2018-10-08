@@ -9,7 +9,6 @@ C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\G
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.csproj.CoreCompileInputs.cache
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.RazorAssemblyInfo.cache
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.RazorAssemblyInfo.cs
-C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.AssemblyInfoInputs.cache
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.AssemblyInfo.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.TagHelpers.input.cache
@@ -75,3 +74,5 @@ C:\Users\epere\OneDrive\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.Views.pdb
 C:\Users\epere\OneDrive\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.dll
 C:\Users\epere\OneDrive\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.pdb
 C:\Users\epere\OneDrive\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.csproj.CopyComplete
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Account\AddWorkout.g.cshtml.cs
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs

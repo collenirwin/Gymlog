@@ -13,6 +13,7 @@ using Gymlog.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Gymlog.Models;
+using Gymlog.Services;
 
 namespace Gymlog
 {
@@ -61,6 +62,8 @@ namespace Gymlog
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_";
                 options.User.RequireUniqueEmail = false;
             });
+            services.AddScoped<EmailSender>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
