@@ -7,6 +7,7 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0;
 }
 
+
 table, th, td {
     border: 2px solid black;
     text-align: center;
@@ -24,3 +25,4 @@ input {
 .fa-trash {
     color: red;
 }
+
