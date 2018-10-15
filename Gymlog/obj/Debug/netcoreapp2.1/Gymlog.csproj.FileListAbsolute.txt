@@ -76,3 +76,6 @@ C:\Users\epere\OneDrive\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.pdb
 C:\Users\epere\OneDrive\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.csproj.CopyComplete
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Account\AddWorkout.g.cshtml.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Account\ConfirmEmail.g.cshtml.cs
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Account\ForgotPasswordConfirmation.g.cshtml.cs
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Account\ResetPasswordConfirmation.g.cshtml.cs

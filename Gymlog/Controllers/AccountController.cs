@@ -32,14 +32,14 @@ namespace Gymlog.Controllers
         //returnUrl: url to return to if user was redirected here
         public IActionResult Register(string returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl; 
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model,string returnUrl = null)
+        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
 
@@ -54,7 +54,7 @@ namespace Gymlog.Controllers
 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: true);
                     SendConfirmationEmail(user);
@@ -64,21 +64,21 @@ namespace Gymlog.Controllers
 
             }
             // pass in model to redisplay form with users perviously enterered info (username,email,etc) after a failure
-            return View(model); 
+            return View(model);
         }
 
         [HttpGet] // serving login page
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
         {
-            if(_signInManager.IsSignedIn(HttpContext.User))
+            if (_signInManager.IsSignedIn(HttpContext.User))
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home"); // bring us home
             }
             // clear cookie to ensure clean login
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            ViewData["ReturnUrl"] = returnUrl; 
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
@@ -91,7 +91,7 @@ namespace Gymlog.Controllers
             {
                 string userName = model.UserName;
 
-                if(userName.Contains("@")) // are the using their email to login
+                if (userName.Contains("@")) // are the using their email to login
                 {
                     var user = await _userManager.FindByEmailAsync(model.UserName);
                     if (user.UserName != null)
@@ -114,7 +114,7 @@ namespace Gymlog.Controllers
                     var result = await _signInManager.PasswordSignInAsync(userName, model.Password,
                         isPersistent: true, lockoutOnFailure: true);
 
-                    if(result.Succeeded)
+                    if (result.Succeeded)
                     {
                         return redirectToLocal(returnUrl);
                     }
@@ -139,7 +139,7 @@ namespace Gymlog.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home"); // bring us home
         }
 
-        [HttpGet] 
+        [HttpGet]
         [AllowAnonymous]
         public IActionResult Lockout()
         {
@@ -152,7 +152,7 @@ namespace Gymlog.Controllers
             if (userId != null && token != null)
             {
                 // get user by id
-                var user = await _userManager.FindByEmailAsync(userId);
+                var user = await _userManager.FindByIdAsync(userId);
 
                 if (user != null)
                 {
@@ -166,29 +166,102 @@ namespace Gymlog.Controllers
             }
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model, string returnUrl = null)
-        //{
-        //    // get user tied to email submitted
-        //    var user = await _userManager.FindByEmailAsync(model.Email);
-        //    if (user != null)
-        //    {
-        //        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-        //    }
-        //}
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgotPassword()
+        {
+            return View(); // heres forgot password page
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model, string returnUrl = null)
+        {
+            // get user tied to email submitted
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                {
+                    // Don't reveal that the user does not exist or is not confirmed
+                    return RedirectToAction(nameof(ForgotPasswordConfirmation));
+                }
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var confirmationUrl = generateTokenUrl(nameof(ResetPassword),user.Id, token, Request.Scheme);
+
+                _emailSender.SendEmailAsync(user.Email, "Reset Password",
+                "This is your reset password link for Gymlog. <br>" +
+                "<a href='" + confirmationUrl + "'> Click here to reset password. </a>");
+
+                return RedirectToAction(nameof(ForgotPasswordConfirmation));
+            }
+
+            return View(model);
+
+
+        }
+        
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResetPassword(string token = null)
+        {
+            if (token == null)
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home"); // if they go to the page directly send em' home
+            }
+            var model = new ResetPasswordViewModel { Token = token };
+            return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                // Don't reveal that the user does not exist
+                return RedirectToAction(nameof(ResetPasswordConfirmation));
+            }
+            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+            if (result.Succeeded)
+            {
+                return RedirectToAction(nameof(ResetPasswordConfirmation));
+            }
+            addErrors(result);
+            return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResetPasswordConfirmation()
+        {
+            return View();
+        }
         private async void SendConfirmationEmail(ApplicationUser user) 
         {
             // generate token
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
             // create the confimation url with user ID and the toekn
-            string confimationUrl = generateTokenUrl(nameof(ConfirmEmail), user.Id, token, Request.Scheme);
+            string confirmationUrl = generateTokenUrl(nameof(ConfirmEmail), user.Id, token, Request.Scheme);
 
             //sender off
             _emailSender.SendEmailAsync(user.Email, "Confirming Gymlog Email Address",
                 "This is your confirmation link for Gymlog. <br>" +
-                "<a href='" + confimationUrl + "'> Click here to confirm email. </a>");
+                "<a href='" + confirmationUrl + "'> Click here to confirm email. </a>");
 
         }
         private IActionResult redirectToLocal(string url)
