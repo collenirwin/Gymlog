@@ -20,11 +20,6 @@ namespace Gymlog.Controllers
             return View();
         }
 
-        /*public IActionResult AddWorkout()
-        {
-            return View();
-        }*/
-
         public IActionResult Privacy()
         {
             return View();
