@@ -77,7 +77,10 @@ namespace Gymlog
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                //TODO: get rid of use dev
+                //app.UseExceptionHandler("/Home/Error");
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
                 app.UseHsts();
             }
 

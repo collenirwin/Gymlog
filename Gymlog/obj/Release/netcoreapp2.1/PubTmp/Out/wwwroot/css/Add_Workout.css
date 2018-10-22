@@ -1,0 +1,28 @@
+﻿/* Remove number arrows on input number types */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+
+table, th, td {
+    border: 2px solid black;
+    text-align: center;
+}
+
+th {
+    width: 2%;
+}
+
+input {
+    width: 13%;
+    text-align: center;
+}
+
+.fa-trash {
+    color: red;
+}
+

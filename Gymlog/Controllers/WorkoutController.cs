@@ -58,10 +58,15 @@ namespace Gymlog.Controllers
         [HttpPost]
         public IActionResult AddWorkout([FromBody]WorkoutFormModel exercise)
         {
+
             var username = User.Identity.Name;
-            username = username.ToUpper();
-           var rows = exercise.Rows;
-            return Content($"Testzz {rows}");
+            if (username != null)
+            {
+                username = username.ToUpper();
+                var rows = exercise.Rows;
+                return Content($"Testzz {rows}");
+            }
+            return View();
         }
 
 
