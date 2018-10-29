@@ -16,7 +16,6 @@ C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Release\netcoreapp2.1
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Release\netcoreapp2.1\Gymlog.TagHelpers.output.cache
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Release\netcoreapp2.1\Gymlog.RazorCoreGenerate.cache
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Release\netcoreapp2.1\Razor\Areas\Identity\Pages\_ViewStart.g.cshtml.cs
-C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Release\netcoreapp2.1\Razor\Views\Account\AddWorkout.g.cshtml.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Release\netcoreapp2.1\Razor\Views\Account\ConfirmEmail.g.cshtml.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Release\netcoreapp2.1\Razor\Views\Account\ForgotPassword.g.cshtml.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Release\netcoreapp2.1\Razor\Views\Account\ForgotPasswordConfirmation.g.cshtml.cs
@@ -40,3 +39,7 @@ C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Release\netcoreapp2.1
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Release\netcoreapp2.1\Gymlog.dll
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Release\netcoreapp2.1\Gymlog.pdb
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Release\netcoreapp2.1\Gymlog.csproj.CopyComplete
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Release\netcoreapp2.1\Razor\Views\Add\Exercise.g.cshtml.cs
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Release\netcoreapp2.1\Razor\Views\Add\Workout.g.cshtml.cs
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Release\netcoreapp2.1\Razor\Views\Saved\Exercise.g.cshtml.cs
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Release\netcoreapp2.1\Razor\Views\Saved\Workout.g.cshtml.cs

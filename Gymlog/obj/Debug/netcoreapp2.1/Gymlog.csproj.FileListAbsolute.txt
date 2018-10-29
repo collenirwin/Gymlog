@@ -74,7 +74,6 @@ C:\Users\epere\OneDrive\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.Views.pdb
 C:\Users\epere\OneDrive\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.dll
 C:\Users\epere\OneDrive\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.pdb
 C:\Users\epere\OneDrive\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.csproj.CopyComplete
-C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Account\AddWorkout.g.cshtml.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Account\ConfirmEmail.g.cshtml.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Account\ForgotPasswordConfirmation.g.cshtml.cs
@@ -121,3 +120,7 @@ C:\Users\epere\OneDrive\Documents\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.R
 C:\Users\epere\OneDrive\Documents\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.RazorTargetAssemblyInfo.cs
 C:\Users\epere\OneDrive\Documents\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.Views.pdb
 C:\Users\epere\OneDrive\Documents\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.csproj.CopyComplete
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Add\Workout.g.cshtml.cs
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Add\Exercise.g.cshtml.cs
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Saved\Workout.g.cshtml.cs
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Saved\Exercise.g.cshtml.cs

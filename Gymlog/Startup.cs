@@ -63,6 +63,7 @@ namespace Gymlog
                 options.User.RequireUniqueEmail = false;
             });
             services.AddScoped<EmailSender>();
+            services.AddScoped<ExerciseService>(); // used for DI, when a controller requires this in in ctor pass this 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
