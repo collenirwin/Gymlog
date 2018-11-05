@@ -2,12 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Gymlog.Models;
+using Gymlog.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gymlog.Controllers
 {
     public class SavedController : Controller
     {
+        private readonly ExerciseService _exerciseService;
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public SavedController(ExerciseService exerciseService, UserManager<ApplicationUser> userManager)
+        {
+            _exerciseService = exerciseService;
+            _userManager = userManager;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -32,9 +45,13 @@ namespace Gymlog.Controllers
         }*/
 
         [HttpGet]
-        public IActionResult Exercise()
+        [Authorize]
+        public async Task<IActionResult> Exercises()
         {
-            return View();
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            var exercises = await _exerciseService.ListExercises(currentUser);
+            return View(exercises);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Gymlog.Data;
 using Gymlog.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace Gymlog.Services
         {
             exercise.Id = Guid.NewGuid().ToString();
             exercise.UserId = user.Id;
+            exercise.ExerciseName = exercise.ExerciseName.ToUpper();
+            exercise.ExerciseMuscle = exercise.ExerciseMuscle.ToUpper();
 
             _context.Exercises.Add(exercise);
 
@@ -30,5 +33,12 @@ namespace Gymlog.Services
             int result = await _context.SaveChangesAsync(); // pushes to DB
             return result == 1;
         }
+        public async Task<Exercise[]> ListExercises(ApplicationUser user)
+        {
+            return await _context.Exercises
+                .Where((exercise) =>  user.Id == exercise.UserId)
+                .ToArrayAsync();
+        }
     }
+    
 }
