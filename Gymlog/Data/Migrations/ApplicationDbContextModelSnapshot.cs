@@ -88,6 +88,52 @@ namespace Gymlog.Data.Migrations
                     b.ToTable("Exercises");
                 });
 
+            modelBuilder.Entity("Gymlog.Models.Set", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Comments");
+
+                    b.Property<int>("Reps");
+
+                    b.Property<int>("SetNumber");
+
+                    b.Property<string>("WorkoutExerciseId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sets");
+                });
+
+            modelBuilder.Entity("Gymlog.Models.Workout", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Workouts");
+                });
+
+            modelBuilder.Entity("Gymlog.Models.WorkoutExercise", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ExerciseName");
+
+                    b.Property<string>("WorkoutId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WorkoutExercises");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")

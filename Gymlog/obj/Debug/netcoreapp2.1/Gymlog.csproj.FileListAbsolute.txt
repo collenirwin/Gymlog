@@ -120,7 +120,8 @@ C:\Users\epere\OneDrive\Documents\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.R
 C:\Users\epere\OneDrive\Documents\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.RazorTargetAssemblyInfo.cs
 C:\Users\epere\OneDrive\Documents\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.Views.pdb
 C:\Users\epere\OneDrive\Documents\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.csproj.CopyComplete
-C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Add\Workout.g.cshtml.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Add\Exercise.g.cshtml.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Saved\Workout.g.cshtml.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Saved\Exercises.g.cshtml.cs
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Add\ErwinWorkout.g.cshtml.cs
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Add\Workout.g.cshtml.cs

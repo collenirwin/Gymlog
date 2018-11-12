@@ -1,188 +1,106 @@
-﻿@model Gymlog.Models.WorkoutFormModel
-
+﻿
 @{
     ViewData["Title"] = "Add Workout";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="~/css/Add_Workout.css" />
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-</head>
-
-<body>
-
-    <h1> In-Progress</h1>
-    <div id="template-container">
-
-        <temp></temp>
-
-
-        <button v-on:click="addExericse" class="btn btn-primary">
-            <i class="fa fa-plus"></i> Add Exercise
-        </button>
+<div id="workout-container">
+    <hr />
+    <input type="text" class="form-control" placeholder="Workout Name" name="workout-name" v-model="workoutName"/>
+    <hr />
+    <div id="workout-exercise-container">
+        <workout-exercise v-for="x in exercises" :exercise="x" />
     </div>
 
+    <button class="btn btn-default" v-on:click="addExercise">Add Exercise</button>
+    <form method="post" v-on:submit="post">
+        <input type="hidden" name="data" id="data" />
+        <input type="hidden" name="name" id="workout-name" />
+        <input type="submit" class="btn btn-default" value="Save Workout" />
+    </form>
+</div>
 
-    <!-- Button HTML (to Trigger Modal) -->
-    <a href="#myModal" role="button" class="btn btn-large btn-primary pull-right" data-toggle="modal">Add Exercise</a>
+<script type="text/x-template" id="workout-exercise-template">
+    <div>
+        <input type="text" class="form-control" placeholder="Exercise Name" name="exercise-name" v-model="exercise.name" />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Set
+                    </th>
+                    <th>
+                        Reps
+                    </th>
+                    <th>
+                        Comments
+                    </th>
+                    <th>
 
-    <!-- Modal HTML -->
-    <div id="myModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Add an Exercise</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Do you want to save changes you made to document before closing?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Add</button>
-                </div>
-            </div>
-        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(row, x) in exercise.rows" :key="x">
+                    <td>
+                        {{row.setNumber}}
+                    </td>
+                    <td>
+                        <input min="1" type="number" v-model="row.reps" />
+                    </td>
+                    <td>
+                        <input type="text" v-model="row.comments" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-default" v-on:click="addRow">Add Set</button>
     </div>
+</script>
 
-
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-
-
-    <script>
-        $(function () {
-            $('#myModal').modal({
-                backdrop: true,
-                show: false
-            });
-        });
-        $('#myModal').modal('show');
-        $('#myModal').modal('hide');
-
-        $('#submit').bind('click', submit_click);
-
-        function submit_click(event) {
-            event.preventDefault();
-            alert('clicked submit');
+<script>
+    class Exercise {
+        constructor() {
+            this.name = "";
+            this.rows = [new Row(1)];
         }
+    }
+    class Row {
+        constructor(setNumber) {
+            this.setNumber = setNumber;
+            this.reps = 1;
+            this.comments = "";
+        }
+    }
 
+    const ExerciseComponent = Vue.component("workout-exercise", {
+        template: "#workout-exercise-template",
+        props: ["exercise"],
+        data() {
+            return {
+                nextSetNumber: 2
+            };
+        },
+        methods: {
+            addRow() {
+                this.exercise.rows.push(new Row(this.nextSetNumber++));
+            }
+        }
+    });
 
-    </script>
-    <script>
-        const TempComponent = Vue.component('temp', {
-            template: '\
-                                                    <div> \
-                                                        <table v-for="(name,i) in rows.slice(0,1)" :key="i">\
-                                                        <tr><input class="form-control" type="text" name="exercise" v-model="name.exercise" placeholder="Exercise Name"/></tr>\
-                                                            <tr>\
-                                                                <th></th>\
-                                                                <th>Set</th>\
-                                                                <th>Reps</th>\
-                                                                <th>Rest</th>\
-                                                                <th>Comments</th>\
-                                                            </tr>\
-                                                            <tr v-for= "(row,k) in rows" :key="k">\
-                                                                <td scope="row">\
-                                                                    <i class="fa fa-trash" v-on:click="delRow(k,row)"></i>\
-                                                                </td >\
-                                                                <td>\
-                                                                    <input class="form-control" type="number" name="sets" v-model="row.set" readonly="readonly"/>\
-                                                                </td>\
-                                                                <td>\
-                                                                    <input class="form-control" type="number" name="reps" v-model="row.num_of_reps" placeholder="10"/>\
-                                                                </td>\
-                                                                <td>\
-                                                                    <input asp-for="WorkoutFormModel.Rest_time" class="form-control" type="text" v-model="row.rest_time" placeholder="1:30"/>\
-                                                                </td>\
-                                                                <td>\
-                                                                    <input class="form-control" type="text" v-model="row.comments"/>\
-                                                                </td>\
-                                                            </tr>\
-                                                        </table>\
-                                                        <button type="button" class="btn btn-info" v-on:click="addRow">\
-                                                            <i class="fa fa-plus"></i>\
-                                                                Add Row\
-                                                        </button>\
-                            <button v-on:click="postForm"> Submit</button>\
-                                                </div>',
-            data() {
-                return {
-                    set_number: 2,
-                    rows: [{
-                        exercise: "",
-                        set: 1,
-                        num_of_reps: "",
-                        rest_time: "",
-                        comments: ""
-                    }]
-                }
+    new Vue({
+        el: "#workout-container",
+        data: {
+            workoutName: "",
+            exercises: [new Exercise()]
+        },
+        methods: {
+            addExercise() {
+                this.exercises.push(new Exercise());
             },
-            methods: {
-                addRow: function () {
-                    this.rows.push({
-                        exercise: "",
-                        set: this.set_number++,
-                        num_of_reps: "",
-                        rest_time: "",
-                        comments: ""
-                    });
-                    console.log(this.rows);
-                },
-                delRow: function (k, row) {
-                    let row_index = this.rows.indexOf(row);
-                    if (row_index > 0) {
-                        this.rows.splice(row_index, 1);
-                    }
-                    this.set_number = 1;
-                    for (let i in this.rows) {
-                        this.rows[i].set = this.set_number;
-                        this.set_number++;
-                    };
-                },
-                postForm: function () {
-
-                    axios({
-                        method: 'post',
-                        url: '/Workout/AddWorkout',
-                        data: {
-                            "Rows": JSON.stringify(this.rows)
-                        }
-                    })
-                        .then(function (response) {
-                            console.log(response);
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-
-                }
+            post() {
+                document.getElementById("data").value = JSON.stringify(this.exercises);
+                document.getElementById("workout-name").value = this.workoutName;
             }
-        });
-
-        const temp = new Vue({
-            el: "#template-container",
-
-            methods: { // for adding new talbe
-                addExericse() {
-                    console.log(this.$el);
-                    const instance = new TempComponent();
-                    instance.$mount();
-                    this.$el.appendChild(instance.$el);
-
-                }
-            }
-        });
-
-
-    </script>
-</body>
-
-
-
-</html>
+        }
+    });
+</script>

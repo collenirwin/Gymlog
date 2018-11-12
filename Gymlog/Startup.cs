@@ -64,6 +64,7 @@ namespace Gymlog
             });
             services.AddScoped<EmailSender>();
             services.AddScoped<ExerciseService>(); // used for DI, when a controller requires this in in ctor pass this 
+            services.AddScoped<WorkoutService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
