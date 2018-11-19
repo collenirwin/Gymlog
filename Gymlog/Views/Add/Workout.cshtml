@@ -15,7 +15,8 @@
     <form method="post" v-on:submit="post">
         <input type="hidden" name="data" id="data" />
         <input type="hidden" name="name" id="workout-name" />
-        <input type="submit" class="btn btn-default" value="Save Workout" />
+        <input type="submit" class="btn btn-default" value="Save Workout"
+               style="position: fixed; bottom: 50px; right: 50px; color:#9d9d9d; background-color:#101010;" />
     </form>
 </div>
 
@@ -53,7 +54,7 @@
                 </tr>
             </tbody>
         </table>
-        <button class="btn btn-default" v-on:click="addRow">Add Set</button>
+        <button class="btn btn-default" v-on:click="addRow" style="margin-bottom: 20px;">Add Set</button>
     </div>
 </script>
 

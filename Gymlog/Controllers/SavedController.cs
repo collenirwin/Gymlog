@@ -53,5 +53,23 @@ namespace Gymlog.Controllers
             var exercises = await _exerciseService.ListExercises(currentUser);
             return View(exercises);
         }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> DeleteExercise(string exericseId)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var exercise = await _exerciseService.getExercise(exericseId);
+
+            if (exercise.UserId == currentUser.Id)
+            {
+                await _exerciseService.deleteExercise(exercise);
+                return RedirectToAction("Exercises");
+            }
+            else
+            {
+                return Challenge();
+            }
+        }
     }
 }

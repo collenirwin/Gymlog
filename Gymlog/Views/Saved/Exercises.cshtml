@@ -31,8 +31,11 @@
                 @Html.DisplayFor(modelItem => item.ExerciseMuscle)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                <form method="delete" input type="submit">Delete</form>
+                @Html.ActionLink("Edit", "Exercise", "Edit", new {  id=item.Id  })
+                <form method="post" action="/Saved/DeleteExercise" style="display:inline">
+                    <input name="exericseId" type="hidden" value="@item.Id">
+                    <input class="btn-link" type="submit" value="Delete">
+                </form>
             </td>
         </tr>
 }

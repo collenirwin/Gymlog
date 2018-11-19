@@ -1,0 +1,35 @@
+﻿@model Gymlog.Models.Exercise
+
+@{
+    ViewData["Title"] = "Edit Exercise";
+}
+
+<h2>Edit Exercise</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Exercise">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ExerciseName" class="control-label"></label>
+                <input asp-for="ExerciseName" class="form-control" />
+                <span asp-validation-for="ExerciseName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExerciseMuscle" class="control-label"></label>
+                <input asp-for="ExerciseMuscle" class="form-control" />
+                <span asp-validation-for="ExerciseMuscle" class="text-danger"></span>
+            </div>
+            <input asp-for="UserId" type="hidden" />
+            <input asp-for="Id" type="hidden" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-area="" asp-controller="Saved" asp-action="Exercises">Back to List</a>
+</div>
+

@@ -86,6 +86,54 @@ namespace Gymlog.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Exercises");
+
+                    b.HasData(
+                        new { Id = "1", ExerciseMuscle = "CHEST", ExerciseName = "FLAT BARBELL BENCH PRESS" },
+                        new { Id = "2", ExerciseMuscle = "CHEST", ExerciseName = "FLAT DUMBBELL BENCH PRESS" },
+                        new { Id = "3", ExerciseMuscle = "CHEST", ExerciseName = "INCLINE BARBELL BENCH PRESS" },
+                        new { Id = "4", ExerciseMuscle = "CHEST", ExerciseName = "INCLINE DUMBBELL BENCH PRESS" },
+                        new { Id = "5", ExerciseMuscle = "CHEST", ExerciseName = "DECLINE BARBELL BENCH PRESS" },
+                        new { Id = "6", ExerciseMuscle = "CHEST", ExerciseName = "DECLINE DUMBBELL BENCH PRESS" },
+                        new { Id = "7", ExerciseMuscle = "CHEST", ExerciseName = "CHEST DIPS" },
+                        new { Id = "8", ExerciseMuscle = "CHEST", ExerciseName = "PUSH-UPS" },
+                        new { Id = "9", ExerciseMuscle = "CHEST", ExerciseName = "FLAT DUMBBELL FLYES" },
+                        new { Id = "10", ExerciseMuscle = "CHEST", ExerciseName = "INCLINE DUMBBELL FLYES" },
+                        new { Id = "11", ExerciseMuscle = "CHEST", ExerciseName = "DECLINE DUMBBELL FLYES" },
+                        new { Id = "12", ExerciseMuscle = "CHEST", ExerciseName = "CABLE CROSSOVERS" },
+                        new { Id = "13", ExerciseMuscle = "BACK", ExerciseName = "PULL-UPS" },
+                        new { Id = "14", ExerciseMuscle = "BACK", ExerciseName = "CHIN-UPS" },
+                        new { Id = "15", ExerciseMuscle = "BACK", ExerciseName = "LAT PULL-DOWNS" },
+                        new { Id = "16", ExerciseMuscle = "BACK", ExerciseName = "BENT OVER BARBELL ROWS" },
+                        new { Id = "17", ExerciseMuscle = "BACK", ExerciseName = "BENT OVER DUMBBELL ROWS" },
+                        new { Id = "18", ExerciseMuscle = "BACK", ExerciseName = "T-BAR ROWS" },
+                        new { Id = "19", ExerciseMuscle = "BACK", ExerciseName = "SEATED CABLE ROWS" },
+                        new { Id = "20", ExerciseMuscle = "BACK", ExerciseName = "BARBELL SHRUGS" },
+                        new { Id = "21", ExerciseMuscle = "BACK", ExerciseName = "DUMBBELL SHRUGS" },
+                        new { Id = "22", ExerciseMuscle = "SHOULDER", ExerciseName = "SEATED OVERHEAD BARBELL PRESS" },
+                        new { Id = "23", ExerciseMuscle = "SHOULDER", ExerciseName = "SEATED OVERHEAD DUMBBELL PRESS" },
+                        new { Id = "24", ExerciseMuscle = "SHOULDER", ExerciseName = "STANDING OVERHEAD BARBELL PRESS" },
+                        new { Id = "25", ExerciseMuscle = "SHOULDER", ExerciseName = "STANDING OVERHEAD DUMBBELL PRESS" },
+                        new { Id = "26", ExerciseMuscle = "SHOULDER", ExerciseName = "ARNOLD PRESS" },
+                        new { Id = "27", ExerciseMuscle = "SHOULDER", ExerciseName = "DUMBBELL LATERAL RAISES" },
+                        new { Id = "28", ExerciseMuscle = "SHOULDER", ExerciseName = "DUMBBELL FRONT RAISES" },
+                        new { Id = "29", ExerciseMuscle = "LEGS", ExerciseName = "SQUAT" },
+                        new { Id = "30", ExerciseMuscle = "LEGS", ExerciseName = "FRONT SQUATS" },
+                        new { Id = "31", ExerciseMuscle = "LEGS", ExerciseName = "BARBELL LUNGES" },
+                        new { Id = "32", ExerciseMuscle = "LEGS", ExerciseName = "DUMBBELL LUNGES" },
+                        new { Id = "33", ExerciseMuscle = "LEGS", ExerciseName = "LEG PRESS" },
+                        new { Id = "34", ExerciseMuscle = "LEGS", ExerciseName = "DEADLIFT" },
+                        new { Id = "35", ExerciseMuscle = "LEGS", ExerciseName = "STRAIGHT LEG DEADLIFTS" },
+                        new { Id = "36", ExerciseMuscle = "LEGS", ExerciseName = "SUMO DEADLIFTS" },
+                        new { Id = "37", ExerciseMuscle = "LEGS", ExerciseName = "HYPEREXTENSIONS" },
+                        new { Id = "38", ExerciseMuscle = "LEGS", ExerciseName = "GOOD-MORNINGS" },
+                        new { Id = "39", ExerciseMuscle = "LEGS", ExerciseName = "LEG CURLS" },
+                        new { Id = "40", ExerciseMuscle = "TRICEPS", ExerciseName = "TRICEP DIPS" },
+                        new { Id = "41", ExerciseMuscle = "TRICEPS", ExerciseName = "FLAT CLOSE GRIP BENCH PRESS" },
+                        new { Id = "42", ExerciseMuscle = "TRICEPS", ExerciseName = "SKULL CRUSHERS" },
+                        new { Id = "43", ExerciseMuscle = "BICEPS", ExerciseName = "DUMBBELL CURLS" },
+                        new { Id = "44", ExerciseMuscle = "BICEPS", ExerciseName = "PREACHER CURLS" },
+                        new { Id = "45", ExerciseMuscle = "BICEPS", ExerciseName = "HAMMER CURLS" }
+                    );
                 });
 
             modelBuilder.Entity("Gymlog.Models.Set", b =>
