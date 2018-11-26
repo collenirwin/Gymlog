@@ -22,8 +22,10 @@ namespace Gymlog.Services
             workout.UserId = user.Id;
             _context.Workouts.Add(workout);
             postCount++;
-            foreach (var workoutExercise in workout.WorkoutExericses)
+            int count = 1;
+            foreach (var workoutExercise in workout.WorkoutExercises)
             {
+                workoutExercise.ExerciseNumber = count++;
                 workoutExercise.Id = Guid.NewGuid().ToString();
                 workoutExercise.WorkoutId = workout.Id;
                 _context.WorkoutExercises.Add(workoutExercise);
@@ -51,6 +53,23 @@ namespace Gymlog.Services
                 .Where((workout) => user.Id == workout.UserId)
                 .ToArrayAsync();
         }
+        public async Task<Workout> getWorkout(string id)
+        {
+            var workout = await _context.Workouts
+                .FirstOrDefaultAsync((w) => w.Id == id);
+
+            workout.WorkoutExercises = await _context.WorkoutExercises
+                .Where((w) => w.WorkoutId == workout.Id).OrderBy((x) => x.ExerciseNumber).ToListAsync();
+
+            foreach(var workoutExercise in workout.WorkoutExercises)
+            {
+                workoutExercise.Sets = await _context.Sets
+                    .Where((s) => s.WorkoutExerciseId == workoutExercise.Id).OrderBy((x) => x.SetNumber).ToListAsync();
+            }
+
+            return workout;
+        }
+        
     }
 }
 

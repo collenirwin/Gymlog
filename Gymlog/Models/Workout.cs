@@ -12,6 +12,6 @@ namespace Gymlog.Models
         public string Id { get; set; }
         public string Name { get; set; }
         [NotMapped]
-        public List<WorkoutExercise> WorkoutExericses { get; set; }
+        public List<WorkoutExercise> WorkoutExercises { get; set; }
     }
 }

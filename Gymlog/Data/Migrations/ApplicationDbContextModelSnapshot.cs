@@ -175,6 +175,8 @@ namespace Gymlog.Data.Migrations
 
                     b.Property<string>("ExerciseName");
 
+                    b.Property<int>("ExerciseNumber");
+
                     b.Property<string>("WorkoutId");
 
                     b.HasKey("Id");

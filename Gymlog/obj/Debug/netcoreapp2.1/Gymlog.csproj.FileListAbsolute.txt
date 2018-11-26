@@ -17,7 +17,6 @@ C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\G
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\_ViewStart.g.cshtml.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Home\About.g.cshtml.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Home\Index.g.cshtml.cs
-C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Home\Privacy.g.cshtml.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Error.g.cshtml.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Layout.g.cshtml.cs
@@ -121,7 +120,8 @@ C:\Users\epere\OneDrive\Documents\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.R
 C:\Users\epere\OneDrive\Documents\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.Views.pdb
 C:\Users\epere\OneDrive\Documents\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Gymlog.csproj.CopyComplete
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Add\Exercise.g.cshtml.cs
-C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Saved\Workout.g.cshtml.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Saved\Exercises.g.cshtml.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Add\Workout.g.cshtml.cs
 C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Edit\Exercise.g.cshtml.cs
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Saved\Workouts.g.cshtml.cs
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Saved\Workout.g.cshtml.cs

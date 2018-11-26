@@ -72,7 +72,7 @@ namespace Gymlog.Controllers
             var workout = new Workout
             {
                 Name = name,
-                WorkoutExericses = workoutExercises
+                WorkoutExercises = workoutExercises
             };
 
             bool success = await _workoutService.AddWorkout(workout, currentUser);

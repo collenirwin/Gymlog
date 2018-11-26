@@ -70,7 +70,7 @@ using Gymlog.Models;
             WriteLiteral("\r\n<h2>Exercises</h2>\r\n\r\n<p>\r\n    ");
             EndContext();
             BeginContext(124, 72, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "55e6bfaaf8424827a743b7733b148f90", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "46568d4a21e8475c9b0c14671cf4c6d0", async() => {
                 BeginContext(182, 10, true);
                 WriteLiteral("Create New");
                 EndContext();
@@ -154,7 +154,7 @@ using Gymlog.Models;
             WriteLiteral("\r\n                ");
             EndContext();
             BeginContext(901, 252, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "683a481c1add4a9d8bf05ff8b8d0e281", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fc0807c5922b4685b1b80e0a2637ffb1", async() => {
                 BeginContext(975, 60, true);
                 WriteLiteral("\r\n                    <input name=\"exericseId\" type=\"hidden\"");
                 EndContext();

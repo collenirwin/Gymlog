@@ -12,6 +12,8 @@ namespace Gymlog.Models
         public string Id { get; set; }
         public string WorkoutId { get; set; }
 
+        public int ExerciseNumber { get; set; }
+
         [JsonProperty("name")]
         public string ExerciseName { get; set; }
 

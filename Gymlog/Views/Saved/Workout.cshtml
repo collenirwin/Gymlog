@@ -1,7 +1,45 @@
-﻿
+﻿@model Gymlog.Models.Workout
 @{
     ViewData["Title"] = "Workout";
 }
 
-<h2>Workout</h2>
+<h2>@Model.Name</h2>
+<p>
+    <a asp-area="" asp-controller="Saved" asp-action="Workouts">View Saved Workouts</a>
+</p>
+@foreach (var workoutExercise in Model.WorkoutExercises)
+{
+    <h3>@workoutExercise.ExerciseName</h3>
 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Set
+                </th>
+                <th>
+                    Reps
+                </th>
+                <th>
+                    Comments
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var set in workoutExercise.Sets)
+            {
+                <tr>
+                    <td>
+                        @set.SetNumber
+                    </td>
+                    <td>
+                        @set.Reps
+                    </td>
+                    <td>
+                        @set.Comments
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -13,10 +13,12 @@ namespace Gymlog.Controllers
     public class SavedController : Controller
     {
         private readonly ExerciseService _exerciseService;
+        private readonly WorkoutService _workoutService;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public SavedController(ExerciseService exerciseService, UserManager<ApplicationUser> userManager)
+        public SavedController(ExerciseService exerciseService, WorkoutService workoutService, UserManager<ApplicationUser> userManager)
         {
+            _workoutService = workoutService;
             _exerciseService = exerciseService;
             _userManager = userManager;
         }
@@ -27,15 +29,39 @@ namespace Gymlog.Controllers
         }
 
         [HttpGet]
-        public IActionResult Workout()
+        [Authorize]
+        public async Task<IActionResult> Workouts()
         {
-            return View();
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (currentUser == null)
+            {   // make them login
+                return Challenge();
+            }
+
+            var workouts = await _workoutService.ListWorkouts(currentUser);
+            return View(workouts);
         }
 
-        /*[HttpPost]
-        public IActionResult Workout()
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Workout(string id)
         {
-            return View();
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (currentUser == null)
+            {   // make them login
+                return Challenge();
+            }
+
+            var workout = await _workoutService.getWorkout(id);
+
+            if (currentUser.Id == workout.UserId)
+            {
+                return View(workout);
+            }
+            return RedirectToAction(nameof(HomeController.Index), "Home");
+
         }
 
         /*[HttpPost]
