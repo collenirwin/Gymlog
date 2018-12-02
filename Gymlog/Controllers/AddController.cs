@@ -127,6 +127,10 @@ namespace Gymlog.Controllers
             return View();
         }
 
+        public IActionResult Timer()
+        {
+            return View();
+        }
 
     }
 }
