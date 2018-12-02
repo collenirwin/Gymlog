@@ -130,15 +130,6 @@
                 localStorage.removeItem('bool');
                 localStorage.removeItem('timestamp');
             },
-           /* test: function () {
-                window.onbeforeunload = function () {
-                    console.log(this.hours + ":" + this.minutes + ":" + this.seconds);
-                    localStorage.setItem('timestamp', new Date().getTime() / 1000);
-                    localStorage.setItem('timer', this.hours + ":" + this.minutes + ":" + this.test);
-                    localStorage.setItem('bool', 1);
-                    return "Exiting";
-                };
-            },*/
             t: function () {
                 localStorage.setItem('timestamp', new Date().getTime() / 1000);
                 localStorage.setItem('timer', this.hr + ":" + this.min + ":" + this.sec);
@@ -183,22 +174,11 @@
             },
             current() {
                 this._current_ = Date.now() / 1000;
-                console.log(this._current_);
                 return Date.now() / 1000;
             },
         },
         ready: function () {
             window.addEventListener('beforeunload', this.t);
-            this.interval = window.setInterval(() => {
-                this.now = Math.trunc((new Date()).getTime() / 1000);
-            }, 1000);
-           /* window.onbeforeunload = function () {
-                console.log(this.hours + ":" + this.minutes + ":" + this.seconds);
-                localStorage.setItem('timestamp', new Date().getTime() / 1000);
-                localStorage.setItem('timer', this.hours + ":" + this.minutes + ":" + this.test);
-                localStorage.setItem('bool', 1);
-                return "Exiting";
-            };*/
             let myData = localStorage['timer'];
             let bool = localStorage['bool'];
             let timestamp = localStorage['timestamp'];
@@ -213,7 +193,6 @@
                 this.min = Number(s[1]);
                 this.hr = Number(s[0]);
                 this.timer = myData;
-                // this.timer = this.timer_;
                 this.date = (new Date().getTime() + (this.hr * 60 * 60 * 1000) + (this.min * 60 * 1000) + (this.sec * 1000)) / 1000;
                 diff = (new Date().getTime() / 1000) - timestamp;
                 this.begin();

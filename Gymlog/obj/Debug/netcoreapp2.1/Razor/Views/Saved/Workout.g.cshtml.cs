@@ -72,7 +72,7 @@ Write(Model.Name);
             WriteLiteral("</h2>\r\n<p>\r\n    ");
             EndContext();
             BeginContext(106, 83, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "64bf33428a81473dbcd7e1d386eda3d2", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d2cd4682d1ea438a94ee2ffb18954e72", async() => {
                 BeginContext(166, 19, true);
                 WriteLiteral("View Saved Workouts");
                 EndContext();

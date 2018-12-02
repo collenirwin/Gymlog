@@ -65,7 +65,7 @@ using Gymlog.Models;
             WriteLiteral("<h2>Workouts</h2>\r\n<p>\r\n    ");
             EndContext();
             BeginContext(117, 71, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9f7a1f8e704b483aaf380cf42a67e1cf", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e7c03b01af5b41a9b9c27d12fd546a68", async() => {
                 BeginContext(174, 10, true);
                 WriteLiteral("Create New");
                 EndContext();
