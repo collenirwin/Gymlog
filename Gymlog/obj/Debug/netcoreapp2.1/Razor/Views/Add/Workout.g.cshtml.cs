@@ -75,7 +75,7 @@ using Gymlog.Models;
     ");
             EndContext();
             BeginContext(433, 357, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "89541bfb278f4a57b064cca39f73163d", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7118e494d3e547cab97e33ecb07aac3d", async() => {
                 BeginContext(472, 311, true);
                 WriteLiteral(@"
         <input type=""hidden"" name=""data"" id=""data"" />
