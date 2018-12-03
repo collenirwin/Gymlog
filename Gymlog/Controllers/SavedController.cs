@@ -63,7 +63,50 @@ namespace Gymlog.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
 
         }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> LogWorkout(string id)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
 
+            if (currentUser == null)
+            {   // make them login
+                return Challenge();
+            }
+
+            var workout = await _workoutService.getWorkout(id);
+
+            if (currentUser.Id == workout.UserId)
+            {
+                return View(workout);
+            }
+            return RedirectToAction(nameof(HomeController.Index), "Home");
+
+        }
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> LogWorkout(string Id,string[] RepsCompleted,string[] Weight, string[] Notes)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (currentUser == null)
+            {   // make them login
+                return Challenge();
+            }
+            var workout = await _workoutService.getWorkout(Id);
+
+            if (currentUser.Id == workout.UserId)
+            {
+                LoggedWorkout model = new LoggedWorkout();
+                model.WorkoutId = Id;
+                model.RepsCompleted = RepsCompleted;
+                model.Weight = Weight;
+                model.Notes = Notes;
+                await _workoutService.LogWorkout(currentUser, model);
+            }
+            return RedirectToAction(nameof(HomeController.Index), "Home");
+
+        }
         /*[HttpPost]
         public IActionResult Exercise()
         {

@@ -13,7 +13,7 @@ namespace Gymlog.Data
         public DbSet<Workout> Workouts { get; set; }
         public DbSet<WorkoutExercise> WorkoutExercises { get; set; }
         public DbSet<Set> Sets { get; set; }
-
+        public DbSet<LoggedWorkout> LoggedWorkouts { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

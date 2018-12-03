@@ -136,6 +136,28 @@ namespace Gymlog.Data.Migrations
                     );
                 });
 
+            modelBuilder.Entity("Gymlog.Models.LoggedWorkout", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("NotesString");
+
+                    b.Property<string>("RepsCompletedString");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("WeightString");
+
+                    b.Property<string>("WorkoutId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LoggedWorkouts");
+                });
+
             modelBuilder.Entity("Gymlog.Models.Set", b =>
                 {
                     b.Property<string>("Id")

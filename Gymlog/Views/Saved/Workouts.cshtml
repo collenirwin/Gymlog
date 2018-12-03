@@ -1,17 +1,53 @@
 ﻿@model IEnumerable<Gymlog.Models.Workout>
 
 @{
-    ViewData["Title"] = "Workouts";
+    ViewData["Title"] = "Saved Workouts";
 }
-<h2>Workouts</h2>
+<h2>Saved Workouts</h2>
 <p>
     <a asp-area="" asp-controller="Add" asp-action="Workout">Create New</a>
 </p>
+<!--
 <hr />
 <ul class="list-group">
-    @foreach(var workout in Model)
+    @foreach (var workout in Model)
     {
         <a href="/Saved/Workout?id=@workout.Id">
-        <li class="list-group-item" style="max-width:500px">@workout.Name</li></a>
+            <li class="list-group-item" style="max-width:500px">@workout.Name</li>
+        </a>
     }
 </ul>
+-->
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var workout in Model)
+        {
+            <tr>
+                <td>@workout.Name</td>
+                <td>
+                    <a href="/Saved/Workout?id=@workout.Id">View</a>
+                </td>
+                <td>
+                    <a href="/Saved/LogWorkout?id=@workout.Id">Log Workout</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+

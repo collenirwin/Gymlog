@@ -82,15 +82,24 @@ namespace Gymlog.Controllers
                 return BadRequest("Could not add the exercise");
             }
             ModelState.Clear();
-            return View();
+            return await Workout();
             
         }
 
         [HttpGet]
         [Authorize]
-        public IActionResult Workout()
+        public async Task<IActionResult> Workout()
         {
-            return View();
+            var currentUser = await _userManager.GetUserAsync(User);
+            // make sure current user exist
+            if (currentUser == null)
+            {   // make them login
+                return Challenge();
+            }
+            var userExericses = (await _exerciseService.ListExercises(currentUser)).ToList();
+            userExericses.AddRange(await _exerciseService.ListDefaultExercises());
+
+            return View(userExericses);
         }
         
         [HttpPost]
@@ -126,6 +135,7 @@ namespace Gymlog.Controllers
         {
             return View();
         }
+        
 
     }
 }

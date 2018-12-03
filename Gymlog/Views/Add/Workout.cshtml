@@ -22,7 +22,13 @@
 
 <script type="text/x-template" id="workout-exercise-template">
     <div>
-        <input type="text" class="form-control" placeholder="Exercise Name" name="exercise-name" v-model="exercise.name" />
+        <input list="exercises" type="text" class="form-control" placeholder="Exercise Name" name="exercise-name" v-model="exercise.name" />
+        <datalist id="exercises">
+            @foreach (var exercise in Model)
+            {
+            <option>@exercise.ExerciseName - @exercise.ExerciseMuscle</option>
+            }
+        </datalist>
         <table class="table">
             <thead>
                 <tr>
@@ -46,10 +52,10 @@
                         {{row.setNumber}}
                     </td>
                     <td>
-                        <input min="1" type="number" v-model="row.reps" />
+                        <input min="1" max="9999" type="number" v-model="row.reps" />
                     </td>
                     <td>
-                        <input type="text" v-model="row.comments" />
+                        <input maxlength="500" type="text" v-model="row.comments" />
                     </td>
                 </tr>
             </tbody>

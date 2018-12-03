@@ -11,13 +11,14 @@ namespace Gymlog.Services
     public class WorkoutService
     {
         private readonly ApplicationDbContext _context;
-        public int postCount = 0;
+        
         public WorkoutService(ApplicationDbContext context)
         {
             _context = context;
         }
         public async Task<bool> AddWorkout(Workout workout, ApplicationUser user)
         {
+            int postCount = 0;
             workout.Id = Guid.NewGuid().ToString();
             workout.UserId = user.Id;
             _context.Workouts.Add(workout);
@@ -39,13 +40,13 @@ namespace Gymlog.Services
                 }
             }
 
-            return await saveAsync();
+            return await saveAsync(postCount);
         }
 
-        private async Task<bool> saveAsync()
+        private async Task<bool> saveAsync(int expected)
         {
             int result = await _context.SaveChangesAsync(); // pushes to DB
-            return result == postCount;
+            return result == expected;
         }
         public async Task<Workout[]> ListWorkouts(ApplicationUser user)
         {
@@ -69,7 +70,14 @@ namespace Gymlog.Services
 
             return workout;
         }
-        
+        public async Task<bool> LogWorkout(ApplicationUser user,LoggedWorkout model)
+        {
+            model.Id = Guid.NewGuid().ToString();
+            model.UserId = user.Id;
+            model.Date = DateTime.Now;
+            _context.LoggedWorkouts.Add(model);
+            return await saveAsync(1);
+        }
     }
 }
 

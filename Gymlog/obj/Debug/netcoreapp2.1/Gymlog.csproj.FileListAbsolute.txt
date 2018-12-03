@@ -133,3 +133,5 @@ C:\Users\epere\OneDrive\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Home\T
 C:\Users\epere\OneDrive\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Saved\Exercises.g.cshtml.cs
 C:\Users\epere\OneDrive\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Saved\Workout.g.cshtml.cs
 C:\Users\epere\OneDrive\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Saved\Workouts.g.cshtml.cs
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Home\Timer.g.cshtml.cs
+C:\Users\lance\Documents\Programs\Gymlog\Gymlog\Gymlog\obj\Debug\netcoreapp2.1\Razor\Views\Saved\LogWorkout.g.cshtml.cs

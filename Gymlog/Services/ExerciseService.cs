@@ -56,6 +56,12 @@ namespace Gymlog.Services
             _context.Entry(exercise).State = EntityState.Deleted;
             return await saveAsync();
         }
+        public async Task<Exercise[]> ListDefaultExercises()
+        {
+            return await _context.Exercises
+                .Where((exercise) => null == exercise.UserId)
+                .ToArrayAsync();
+        }
     }
     
 }
