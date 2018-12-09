@@ -27,7 +27,7 @@
     }
 
     .block {
-        margin-left: 31%;
+        margin-left: 27%;
     }
 
     .form {
@@ -50,8 +50,6 @@
     <Countdown v-if="show_component"></Countdown>
 
     <Stopwatch v-if="!show_component"></Stopwatch>
-
-    <a href=@ViewBag.AuthUri class="btn btn-primary">Spotify Log In</a>
 
 </div>
 
@@ -97,6 +95,7 @@
         methods: {
             begin: function () {
                 if (this.timer !== "00:00:00" && this.pause_resume === 0) {
+                    console.log("Begin!");
                     this.start = 1;
                     this.button_text = "Pause";
                     this.pause_resume = 1;
@@ -109,20 +108,31 @@
                     this.interval = window.setInterval(() => {
                         this.now = Math.trunc((new Date()).getTime() / 1000);
                     }, 1000);
-                } else if (this.pause_resume === 1) {
+                } else if (this.timer !== "00:00:00" && this.pause_resume === 1) {
                     this.pause();
                 }
-                else if(this.pause_resume === 2) {
+                else if (this.timer !== "00:00:00" && this.pause_resume === 2) {
                     this.pause_resume = 1;
                     this.resume();
                 }
             },
             reset: function () {
                 this.start = 0;
+                clearInterval(this.interval);
+                this.interval = 0;
+                this.min = 0;
+                this.hr = 0;
+                this.sec = 0;
                 this.timer = "00:00:00";
                 this.date = 0;
                 this.now = 0;
                 this.button_text = "Start";
+                this.now = new Date().getTime() / 1000;
+                this.pause_resume = 0;
+                localStorage.removeItem('timer');
+                localStorage.removeItem('bool');
+                localStorage.removeItem('timestamp');
+                localStorage.removeItem('paused');
             },
             pause: function () {
                 this.pause_resume = 2;
@@ -132,27 +142,41 @@
             },
             resume: function () {
                 let curr = new Date().getTime() / 1000;
-                this.date = this.paused_time + curr;   //-------check
-                this.now = (new Date().getTime() / 1000); /// --------check
+                this.date = this.paused_time + curr;
+                this.now = (new Date().getTime() / 1000);
                 this.interval = window.setInterval(() => {
-                    this.now = Math.trunc((new Date()).getTime() / 1000);  //----check
+                    this.now = Math.trunc((new Date()).getTime() / 1000);
                 }, 1000);
                 localStorage.removeItem('timer');
                 localStorage.removeItem('bool');
                 localStorage.removeItem('timestamp');
+                localStorage.removeItem('paused');
                 this.pause_resume = 1;
                 this.button_text = "Pause";
             },
             t: function () {
-                localStorage.setItem('timestamp', new Date().getTime() / 1000);
-                localStorage.setItem('timer', this.hours + ":" + this.minutes + ":" + this.seconds);
-                localStorage.setItem('bool', this.start);
-                return "Success?";
+                if (this.timer !== "00:00:00") {
+                    let pause = this.paused_resume;
+                    localStorage.setItem('timestamp', new Date().getTime() / 1000);
+                    localStorage.setItem('timer', this.hours + ":" + this.minutes + ":" + this.seconds);
+                    localStorage.setItem('bool', this.start);
+                    localStorage.setItem('paused', this.pause_resume); //paused gets SET ----
+                    return "Success?";
+                }
+                else {
+                    return 1;
+                }
             }
         },
         computed: {
             seconds() {
                 if (this.start && this.timer !== "00:00:00" && this.date - this.now > 0) {
+                    if ((Math.trunc((this.date - this.now) % 60)) === 0 && this.minutes === 0 && this.hours === 0) {
+                        localStorage.removeItem('timer');
+                        localStorage.removeItem('bool');
+                        localStorage.removeItem('timestamp');
+                        localStorage.removeItem('paused');
+                    }
                     if ((Math.trunc((this.date - this.now) % 60)) < 10 || (Math.trunc((this.date - this.now) % 60) === 0)) {
                         this.sec = "0" + (Math.trunc((this.date - this.now) % 60)).toString();
                         return "0" + (Math.trunc((this.date - this.now) % 60)).toString();
@@ -194,9 +218,9 @@
             let myData = localStorage['timer'];
             let bool = localStorage['bool'];
             let timestamp = localStorage['timestamp'];
+            let paused = localStorage['paused'];
             let diff = 0;
-            if (myData == null || myData === "00:00:00") {
-                console.log("myData is null");
+            if (myData == null || myData == "00:00:00") {
                 this.timer = "00:00:00";
                 this.button_text = "Start";
             } else {
@@ -207,21 +231,32 @@
                 this.hr = Number(s[0]);
                 this.timer = myData;
                 this.date = (new Date().getTime() + (this.hr * 60 * 60 * 1000) + (this.min * 60 * 1000) + (this.sec * 1000)) / 1000;
-                diff = (new Date().getTime() / 1000) - timestamp;
-                this.begin();
-                
+                if (paused == 2) {
+                    this.pause_resume = 1;
+                    this.button_text = "Resume";
+                } else if (paused == 1) {
+                    this.pause_resume = 1
+                    this.button_text = "Pause";
+                    diff = (new Date().getTime() / 1000) - timestamp;
+                    this.date -= diff;
+                    this.interval = window.setInterval(() => {
+                        this.now = Math.trunc((new Date()).getTime() / 1000);
+                    }, 1000);
+                }
+
             }
             if (this.timer === "00:00:00") {
                 localStorage.removeItem('timer');
                 localStorage.removeItem('bool');
                 localStorage.removeItem('timestamp');
+                localStorage.removeItem('paused');
             }
         }
     });
     Vue.component('Stopwatch', {
         template: '<div> \
          <h3>Stopwatch</h3>\
-        <div class="stopwatch block">     \
+        <div class="timer block">     \
         <p class="digit">{{ hours }}</p>\
         <p class="text">Hours</p>\
         <p class="digit">{{ minutes }}</p>\
@@ -230,29 +265,60 @@
         <p class="digit">{{ milliseconds }}</p>\
         <p class="text">Seconds</p>\
     </div>\
-    <button type="button" v-on:click="begin">Start</button>\
-    <button type="button" v-on:click="reset">Reset</button>\
-    <button type="button" v-on:click="pause">Pause</button>\
-    <button type="button" v-on:click="resume">Resume</button>\
+    <div class="form">\
+        <button type="button" v-on:click="begin">{{button_text}}</button>\
+        <button type="button" v-on:click="add_lap">Lap</button>\
+        <button type="button" v-on:click="reset">Reset</button>\
+    </div>\
+    <div>\
+        <table>\
+            <tr>\
+                <th>{{ lap_text }}</th>\
+                <th>{{ time_text }}</th>\
+            </tr>\
+            <tr v-for="lap in laps">\
+                <td>\
+                    {{ lap.lap }}\
+                </td>\
+                <td>\
+                    {{ lap.time }}\
+                </td>\
+            </tr>\
+        </table>\
 </div>',
         data() {
             return {
                 timer: "00:00:00",
                 min: 0,
                 sec: 0,
-                hr:0,
+                hr: 0,
+                ms:0,
                 now: new Date().getTime() / 1000,
                 start: 0,
                 reset_bool: 0,
                 paused_time: 0,
                 interval: 0,
                 date: 0,
-                diff: 0
+                diff: 0,
+                pause_resume: 0,
+                button_text: "Start",
+                laps: [],
+                lap_num: 1,
+                lap_text: "",
+                time_text:""
             }
         },
         methods: {
+            add_lap: function () {
+                if (this.pause_resume == 1) {
+                    this.laps.unshift({ lap: this.lap_num++, time: this.hours + ":" + this.minutes + ":" + this.seconds + this.milliseconds });
+                    this.lap_text = "Lap ";
+                    this.time_text = " Time (HH:MM:SS)";
+                }
+            },
             begin: function () {
-                if (this.timer === "00:00:00") {
+                console.log(this.pause_resume);
+                if (this.timer == "00:00:00" && this.pause_resume == 0) {
                     this.start = 1;
                     let s = this.timer.split(":");
                     this.sec = Number(s[2]);
@@ -262,6 +328,28 @@
                     this.interval = window.setInterval(() => {
                         this.now = (Date.now() / 1000);
                     }, 1);
+                    this.pause_resume = 1;
+                    this.button_text = "Pause";
+                } else if (this.pause_resume == 1) {
+                    clearInterval(this.interval);
+                    this.min = this.minutes;
+                    this.sec = this.seconds;
+                    this.ms = this.milliseconds;
+                    this.paused_time = this.date - this.now;
+                    this.pause_resume = 2;
+                    this.button_text = "Resume";
+
+                } else if (this.pause_resume == 2) {
+                    console.log("Paused_time: " + this.paused_time);
+                        let curr = new Date().getTime() / 1000;
+                        this.date = curr + this.paused_time;
+                        this.now = (new Date().getTime() / 1000);
+                        this.interval = window.setInterval(() => {
+                            this.now = (Date.now() / 1000);
+                        }, 1);
+                        this.start = 1;
+                        this.pause_resume = 1;
+                        this.button_text = "Pause";
                 }
             },
             reset: function () {
@@ -269,27 +357,101 @@
                 this.timer = "00:00:00";
                 this.date = 0;
                 this.now = 0;
+                this.pause_resume = 0;
+                clearInterval(this.interval);
+                this.interval = 0;
+                this.button_text = "Start";
+                this.laps = [];
+                this.lap_num = 1;
+                this.lap_text = "";
+                this.time_text = "";
+                localStorage.removeItem('stopwatch');
+                localStorage.removeItem('stopwatch_bool');
+                localStorage.removeItem('stopwatch_timestamp');
+                localStorage.removeItem('stopwatch_time');
+                localStorage.removeItem('stopwatch_paused');
+                localStorage.removeItem('laps');
             },
             pause: function () {
-                window.clearInterval(this.interval);
-                this.min = this.minutes;
-                this.sec = this.seconds;
-                this.ms = this.milliseconds;
-                this.paused_time = this.date - this.now;
+                if (this.pause_resume == 1) {
+                    clearInterval(this.interval);
+                    this.min = this.minutes;
+                    this.sec = this.seconds;
+                    this.ms = this.milliseconds;
+                    this.paused_time = this.date - this.now;
+                    this.pause_resume = 2;
+                    this.button_text = "Resume";
+                }
             },
             resume: function () {
-                let curr = new Date().getTime() / 1000;
-                this.date = this.paused_time + curr;
-                this.interval = window.setInterval(() => {
-                    this.now = (Date.now() / 1000);
-                }, 1);
-                this.start = 1;
+                if (this.pause_resume == 2) {
+                    let curr = new Date().getTime() / 1000;
+                    this.date = this.paused_time + curr;
+                    this.interval = window.setInterval(() => {
+                        this.now = (Date.now() / 1000);
+                    }, 1);
+                    this.start = 1;
+                    this.pause_resume = 1;
+                    this.button_text = "Pause";
+                }
+            },
+            t: function () {
+                let stopwatch = this.hours + this.minutes + this.seconds + this.milliseconds;
+                if (stopwatch > 0) {
+                    localStorage.setItem('stopwatch_timestamp', new Date().getTime() / 1000);
+                    localStorage.setItem('stopwatch', this.hours + ":" + this.minutes + ":" + this.seconds + this.milliseconds);
+                    localStorage.setItem('stopwatch_bool', this.start);
+                    localStorage.setItem('stopwatch_time', stopwatch);
+                    localStorage.setItem('stopwatch_paused', this.pause_resume);
+                    localStorage.setItem('laps', JSON.stringify(this.laps));
+                    return "Success?";
+                }
+                return 0;
             }
+        },
+        ready: function () {
+            window.addEventListener('beforeunload', this.t);
+            let myData = localStorage['stopwatch'];
+            let bool = localStorage['stopwatch_bool'];
+            let timestamp = localStorage['stopwatch_timestamp'];
+            let stopwatch_time = localStorage['stopwatch_time'];
+            let paused = localStorage['stopwatch_paused'];
+            let laps = localStorage['laps'];
+            let diff = 0;
+            if (stopwatch_time > 0) {
+                this.laps = JSON.parse(laps);
+                this.lap_num = JSON.parse(laps).length + 1;
+                if (laps !== null) {
+                    this.lap_text = "Lap ";
+                    this.time_text = " Time (HH:MM:SS)";
+                };
+                this.start = bool;
+                let s = myData.split(":");
+                this.sec = Number(s[2]);
+                this.min = Number(s[1]);
+                this.hr = Number(s[0]);
+                this.timer = myData;
+                this.date = (new Date().getTime() - (this.hr * 60 * 60 * 1000) - (this.min * 60 * 1000) - (this.sec * 1000)) / 1000;
+                diff = (new Date().getTime() / 1000) - timestamp;
+
+                if (paused == 1) {
+                    this.date -= diff;
+                    this.interval = window.setInterval(() => {
+                        this.now = (Date.now() / 1000);
+                    }, 1);
+                    this.pause_resume = 1;
+                    this.button_text = "Pause";
+                } else if (paused == 2) {
+                    this.button_text = "Resume";
+                    this.pause_resume = 1;
+                }
+            }
+            return 0;
         },
         computed: {
             seconds() {
                 if (this.start) {
-                    if (Math.trunc((this.now - this.date) % 60) < 10 || Math.trunc((this.now - this.date) % 60) === 0) {
+                    if (Math.trunc((this.now - this.date) % 60) < 10) {
                         return "0" + (Math.trunc((this.now - this.date) % 60)).toString();
                     }
                     return Math.trunc((this.now - this.date) % 60);
@@ -298,7 +460,7 @@
             },
             minutes() {
                 if (this.start) {
-                    if (Math.trunc((this.now - this.date) / 60) % 60 < 10 || Math.trunc((this.now - this.date) / 60) % 60 === 0) {
+                    if (Math.trunc((this.now - this.date) / 60) % 60 < 10) {
                         return "0" + (Math.trunc((this.now - this.date) / 60) % 60).toString();
                     }
                     return Math.trunc((this.now - this.date) / 60) % 60;
