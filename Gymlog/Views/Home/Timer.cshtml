@@ -44,18 +44,22 @@
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.21/vue.js"></script>
-<div id="app">
-    <button type="button" v-on:click="show_component = !show_component">Timer/Stopwatch</button>
+<div class="row">
+    <div class="col-md-12">
+        <div id="app">
+            <button type="button" v-on:click="show_component = !show_component">Timer/Stopwatch</button>
 
-    <Countdown v-if="show_component"></Countdown>
+            <Countdown v-if="show_component"></Countdown>
 
-    <Stopwatch v-if="!show_component"></Stopwatch>
+            <Stopwatch v-if="!show_component"></Stopwatch>
 
+        </div>
+    </div>
 </div>
 
 
 
-<script>
+        <script>
 
     Vue.component('Countdown', {
         template: '<div> \
@@ -492,4 +496,4 @@
         }
 	})
 
-</script>
+        </script>
