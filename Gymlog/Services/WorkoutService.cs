@@ -78,6 +78,25 @@ namespace Gymlog.Services
             _context.LoggedWorkouts.Add(model);
             return await saveAsync(1);
         }
+        public async Task<LoggedWorkout[]> ListLoggedWorkouts(ApplicationUser user)
+        {
+            return await _context.LoggedWorkouts
+                .Where((workout) => user.Id == workout.UserId)
+                .OrderByDescending((workout) => workout.Date)
+                .ToArrayAsync();
+        }
+        public async Task<LoggedWorkout> getLoggedWorkout(string id)
+        {
+            var workout = await _context.LoggedWorkouts
+                .FirstOrDefaultAsync((w) => w.Id == id);
+            return workout;
+        }
+        public async Task<Workout[]> ListDefaultWorkouts(ApplicationUser user)
+        {
+            return await _context.Workouts
+                .Where((workout) => null == workout.UserId)
+                .ToArrayAsync();
+        }
     }
 }
 

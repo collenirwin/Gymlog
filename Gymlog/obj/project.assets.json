@@ -12913,23 +12913,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\epere\\.nuget\\packages\\": {},
+    "C:\\Users\\lance\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\epere\\OneDrive\\Gymlog\\Gymlog\\Gymlog.csproj",
+      "projectUniqueName": "C:\\Users\\lance\\Documents\\Programs\\gymClone12_9\\Gymlog\\Gymlog\\Gymlog.csproj",
       "projectName": "Gymlog",
-      "projectPath": "C:\\Users\\epere\\OneDrive\\Gymlog\\Gymlog\\Gymlog.csproj",
-      "packagesPath": "C:\\Users\\epere\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\epere\\OneDrive\\Gymlog\\Gymlog\\obj\\",
+      "projectPath": "C:\\Users\\lance\\Documents\\Programs\\gymClone12_9\\Gymlog\\Gymlog\\Gymlog.csproj",
+      "packagesPath": "C:\\Users\\lance\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\lance\\Documents\\Programs\\gymClone12_9\\Gymlog\\Gymlog\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\epere\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\lance\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

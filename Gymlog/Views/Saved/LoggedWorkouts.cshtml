@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Gymlog.Models.LoggedWorkout>
+@{
+    ViewData["Title"] = "Logged Workouts";
+}
+
+<h2>Logged Workouts</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var workout in Model)
+        {
+        <tr>
+            <td>@workout.WorkoutName</td>
+            <td>@workout.Date.ToString("MM/dd/yyyy hh:mm tt")</td>
+            <td>
+                <a href="/Saved/LoggedWorkout?id=@workout.Id">View</a>
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>

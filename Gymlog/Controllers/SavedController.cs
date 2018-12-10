@@ -39,7 +39,8 @@ namespace Gymlog.Controllers
                 return Challenge();
             }
 
-            var workouts = await _workoutService.ListWorkouts(currentUser);
+            var workouts = (await _workoutService.ListWorkouts(currentUser)).ToList();
+            workouts.AddRange(await _workoutService.ListDefaultWorkouts(currentUser));
             return View(workouts);
         }
 
@@ -56,7 +57,7 @@ namespace Gymlog.Controllers
 
             var workout = await _workoutService.getWorkout(id);
 
-            if (currentUser.Id == workout.UserId)
+            if (currentUser.Id == workout.UserId || null == workout.UserId)
             {
                 return View(workout);
             }
@@ -76,7 +77,7 @@ namespace Gymlog.Controllers
 
             var workout = await _workoutService.getWorkout(id);
 
-            if (currentUser.Id == workout.UserId)
+            if (currentUser.Id == workout.UserId || null == workout.UserId)
             {
                 return View(workout);
             }
@@ -95,9 +96,10 @@ namespace Gymlog.Controllers
             }
             var workout = await _workoutService.getWorkout(Id);
 
-            if (currentUser.Id == workout.UserId)
+            if (currentUser.Id == workout.UserId || null == workout.UserId)
             {
                 LoggedWorkout model = new LoggedWorkout();
+                model.WorkoutName = workout.Name;
                 model.WorkoutId = Id;
                 model.RepsCompleted = RepsCompleted;
                 model.Weight = Weight;
@@ -121,6 +123,41 @@ namespace Gymlog.Controllers
 
             var exercises = await _exerciseService.ListExercises(currentUser);
             return View(exercises);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> LoggedWorkouts()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            var loggedWorkouts = await _workoutService.ListLoggedWorkouts(currentUser);
+            return View(loggedWorkouts);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> LoggedWorkout(string Id)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (currentUser == null)
+            {   // make them login
+                return Challenge();
+            }
+            
+            var loggedWorkout = await _workoutService.getLoggedWorkout(Id);
+            var workout = await _workoutService.getWorkout(loggedWorkout.WorkoutId);
+
+            LoggedWorkoutViewModel LoggedWorkoutViewModel = new LoggedWorkoutViewModel();
+            LoggedWorkoutViewModel.LoggedWorkout = loggedWorkout;
+            LoggedWorkoutViewModel.Workout = workout;
+
+            if (currentUser.Id == loggedWorkout.UserId)
+            {
+                return View(LoggedWorkoutViewModel);
+            }
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         [HttpPost]

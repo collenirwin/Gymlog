@@ -153,6 +153,8 @@ namespace Gymlog.Data.Migrations
 
                     b.Property<string>("WorkoutId");
 
+                    b.Property<string>("WorkoutName");
+
                     b.HasKey("Id");
 
                     b.ToTable("LoggedWorkouts");
@@ -174,6 +176,35 @@ namespace Gymlog.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sets");
+
+                    b.HasData(
+                        new { Id = "1", Comments = "", Reps = 5, SetNumber = 1, WorkoutExerciseId = "1" },
+                        new { Id = "2", Comments = "", Reps = 5, SetNumber = 2, WorkoutExerciseId = "1" },
+                        new { Id = "3", Comments = "", Reps = 5, SetNumber = 3, WorkoutExerciseId = "1" },
+                        new { Id = "4", Comments = "", Reps = 5, SetNumber = 4, WorkoutExerciseId = "1" },
+                        new { Id = "5", Comments = "", Reps = 5, SetNumber = 5, WorkoutExerciseId = "1" },
+                        new { Id = "6", Comments = "", Reps = 5, SetNumber = 1, WorkoutExerciseId = "2" },
+                        new { Id = "7", Comments = "", Reps = 5, SetNumber = 2, WorkoutExerciseId = "2" },
+                        new { Id = "8", Comments = "", Reps = 5, SetNumber = 3, WorkoutExerciseId = "2" },
+                        new { Id = "9", Comments = "", Reps = 5, SetNumber = 4, WorkoutExerciseId = "2" },
+                        new { Id = "10", Comments = "", Reps = 5, SetNumber = 5, WorkoutExerciseId = "2" },
+                        new { Id = "11", Comments = "", Reps = 5, SetNumber = 1, WorkoutExerciseId = "3" },
+                        new { Id = "12", Comments = "", Reps = 5, SetNumber = 2, WorkoutExerciseId = "3" },
+                        new { Id = "13", Comments = "", Reps = 5, SetNumber = 3, WorkoutExerciseId = "3" },
+                        new { Id = "14", Comments = "", Reps = 5, SetNumber = 4, WorkoutExerciseId = "3" },
+                        new { Id = "15", Comments = "", Reps = 5, SetNumber = 5, WorkoutExerciseId = "3" },
+                        new { Id = "16", Comments = "", Reps = 5, SetNumber = 1, WorkoutExerciseId = "4" },
+                        new { Id = "17", Comments = "", Reps = 5, SetNumber = 2, WorkoutExerciseId = "4" },
+                        new { Id = "18", Comments = "", Reps = 5, SetNumber = 3, WorkoutExerciseId = "4" },
+                        new { Id = "19", Comments = "", Reps = 5, SetNumber = 4, WorkoutExerciseId = "4" },
+                        new { Id = "20", Comments = "", Reps = 5, SetNumber = 5, WorkoutExerciseId = "4" },
+                        new { Id = "21", Comments = "", Reps = 5, SetNumber = 1, WorkoutExerciseId = "5" },
+                        new { Id = "22", Comments = "", Reps = 5, SetNumber = 2, WorkoutExerciseId = "5" },
+                        new { Id = "23", Comments = "", Reps = 5, SetNumber = 3, WorkoutExerciseId = "5" },
+                        new { Id = "24", Comments = "", Reps = 5, SetNumber = 4, WorkoutExerciseId = "5" },
+                        new { Id = "25", Comments = "", Reps = 5, SetNumber = 5, WorkoutExerciseId = "5" },
+                        new { Id = "26", Comments = "", Reps = 5, SetNumber = 1, WorkoutExerciseId = "6" }
+                    );
                 });
 
             modelBuilder.Entity("Gymlog.Models.Workout", b =>
@@ -188,6 +219,11 @@ namespace Gymlog.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Workouts");
+
+                    b.HasData(
+                        new { Id = "1", Name = "StrongLifts 5x5 A" },
+                        new { Id = "2", Name = "StrongLifts 5x5 B" }
+                    );
                 });
 
             modelBuilder.Entity("Gymlog.Models.WorkoutExercise", b =>
@@ -204,6 +240,15 @@ namespace Gymlog.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("WorkoutExercises");
+
+                    b.HasData(
+                        new { Id = "1", ExerciseName = "SQUAT", ExerciseNumber = 1, WorkoutId = "1" },
+                        new { Id = "2", ExerciseName = "FLAT BARBELL BENCH PRESS", ExerciseNumber = 2, WorkoutId = "1" },
+                        new { Id = "3", ExerciseName = "BENT OVER BARBELL ROWS", ExerciseNumber = 3, WorkoutId = "1" },
+                        new { Id = "4", ExerciseName = "SQUAT", ExerciseNumber = 1, WorkoutId = "2" },
+                        new { Id = "5", ExerciseName = "STANDING OVERHEAD BARBELL PRESS", ExerciseNumber = 2, WorkoutId = "2" },
+                        new { Id = "6", ExerciseName = "DEADLIFT", ExerciseNumber = 3, WorkoutId = "2" }
+                    );
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

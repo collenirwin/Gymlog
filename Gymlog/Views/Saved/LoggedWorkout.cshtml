@@ -1,0 +1,67 @@
+﻿@model Gymlog.Models.LoggedWorkoutViewModel
+@{
+    ViewData["Title"] = Model.Workout.Name;
+}
+
+<h2>@Model.Workout.Name</h2>
+<p>
+    <a asp-controller="Saved" asp-action="LoggedWorkouts">View Logged Workouts</a>
+</p>
+@{int count = 0;}
+@foreach (var workoutExercise in Model.Workout.WorkoutExercises)
+{
+    <h3>@workoutExercise.ExerciseName</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Set
+                </th>
+                <th>
+                    Reps
+                </th>
+                <th>
+                    Reps Completed
+                </th>
+                <th>
+                    Comments
+                </th>
+                <th>
+                    Weight
+                </th>
+                <th>
+                    Notes
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var set in workoutExercise.Sets)
+            {
+                <tr>
+                    <td>
+                        @set.SetNumber
+                    </td>
+                    <td>
+                        @set.Reps
+                    </td>
+                    <td>
+                        @Model.LoggedWorkout.RepsCompleted[count]
+                    </td>
+                    <td>
+                        @set.Comments
+                    </td>
+                    <td>
+                        @Model.LoggedWorkout.Weight[count]
+                    </td>
+                    <td>
+                        @Model.LoggedWorkout.Notes[count]
+                    </td>
+                </tr>
+                count++;
+            }
+        </tbody>
+    </table>
+}
+
