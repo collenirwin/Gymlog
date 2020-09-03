@@ -61,7 +61,7 @@ namespace Gymlog
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_";
                 options.User.RequireUniqueEmail = false;
             });
-            services.AddScoped<EmailSender>();
+
             services.AddScoped<ExerciseService>(); // used for DI, when a controller requires this in in ctor pass this 
             services.AddScoped<WorkoutService>();
 

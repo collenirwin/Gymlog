@@ -15,16 +15,13 @@ namespace Gymlog.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly EmailSender _emailSender;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
-            EmailSender emailSender)
+            SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailSender = emailSender;
         }
 
         [HttpGet]
@@ -33,7 +30,7 @@ namespace Gymlog.Controllers
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            return View(new RegisterViewModel());
         }
 
         [HttpPost]
@@ -57,7 +54,6 @@ namespace Gymlog.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: true);
-                    SendConfirmationEmail(user);
                     return redirectToLocal(returnUrl);
                 }
                 addErrors(result);
@@ -79,7 +75,7 @@ namespace Gymlog.Controllers
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            return View(new LoginViewModel());
         }
 
         [HttpPost] // submitting login page
@@ -145,27 +141,7 @@ namespace Gymlog.Controllers
         {
             return View();
         }
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmail(string userId, string token)
-        {
-            if (userId != null && token != null)
-            {
-                // get user by id
-                var user = await _userManager.FindByIdAsync(userId);
-
-                if (user != null)
-                {
-                    // confirm email based on given toekn
-                    var result = await _userManager.ConfirmEmailAsync(user, token);
-                    if (result.Succeeded)
-                    {
-                        return View();
-                    }
-                }
-            }
-            return RedirectToAction(nameof(HomeController.Index), "Home");
-        }
+        
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPassword()
@@ -178,34 +154,6 @@ namespace Gymlog.Controllers
         public IActionResult ForgotPasswordConfirmation()
         {
             return View();
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model, string returnUrl = null)
-        {
-            // get user tied to email submitted
-            if (ModelState.IsValid)
-            {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
-                {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return RedirectToAction(nameof(ForgotPasswordConfirmation));
-                }
-                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var confirmationUrl = generateTokenUrl(nameof(ResetPassword),user.Id, token, Request.Scheme);
-
-                _emailSender.SendEmailAsync(user.Email, "Reset Password",
-                "This is your reset password link for Gymlog. <br>" +
-                "<a href='" + confirmationUrl + "'> Click here to reset password. </a>");
-
-                return RedirectToAction(nameof(ForgotPasswordConfirmation));
-            }
-
-            return View(model);
-
-
         }
         
         [HttpGet]
@@ -250,20 +198,7 @@ namespace Gymlog.Controllers
         {
             return View();
         }
-        private async void SendConfirmationEmail(ApplicationUser user) 
-        {
-            // generate token
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-            // create the confimation url with user ID and the toekn
-            string confirmationUrl = generateTokenUrl(nameof(ConfirmEmail), user.Id, token, Request.Scheme);
-
-            //sender off
-            _emailSender.SendEmailAsync(user.Email, "Confirming Gymlog Email Address",
-                "This is your confirmation link for Gymlog. <br>" +
-                "<a href='" + confirmationUrl + "'> Click here to confirm email. </a>");
-
-        }
         private IActionResult redirectToLocal(string url)
         {
             if (Url.IsLocalUrl(url))
@@ -290,6 +225,5 @@ namespace Gymlog.Controllers
                 ModelState.AddModelError("", error.Description);
             }
         }
-        
     }
 }
