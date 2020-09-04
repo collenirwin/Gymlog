@@ -36,7 +36,7 @@ namespace Gymlog.Services
                 foreach (var set in workoutExercise.Sets)
                 {
                     set.Id = Guid.NewGuid().ToString();
-                    set.WorkoutExerciseId = workoutExercise.Id;
+                    set.WorkoutId = workoutExercise.Id;
                     _context.Sets.Add(set);
                     postCount++;
                 }
@@ -69,7 +69,7 @@ namespace Gymlog.Services
             foreach (var workoutExercise in workout.WorkoutExercises)
             {
                 workoutExercise.Sets = await _context.Sets
-                    .Where((s) => s.WorkoutExerciseId == workoutExercise.Id).OrderBy((x) => x.SetNumber).ToListAsync();
+                    .Where((s) => s.WorkoutId == workoutExercise.Id).OrderBy((x) => x.SetNumber).ToListAsync();
             }
 
             return workout;
