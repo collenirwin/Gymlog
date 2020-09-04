@@ -1,5 +1,6 @@
 ﻿using Gymlog.Data;
 using Gymlog.Models;
+using Gymlog.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;

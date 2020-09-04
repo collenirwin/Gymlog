@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Gymlog.Models
+namespace Gymlog.Models.Data
 {
     public class Workout
     {

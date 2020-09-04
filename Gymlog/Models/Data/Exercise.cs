@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Gymlog.Models
+namespace Gymlog.Models.Data
 {
     public class Exercise
     {

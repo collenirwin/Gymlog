@@ -1,4 +1,5 @@
 ﻿using Gymlog.Models;
+using Gymlog.Models.Data;
 using Gymlog.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -37,6 +38,7 @@ namespace Gymlog.Controllers
 
             return Challenge();
         }
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Exercise(Exercise exercise)

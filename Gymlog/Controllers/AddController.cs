@@ -1,4 +1,5 @@
 ﻿using Gymlog.Models;
+using Gymlog.Models.Data;
 using Gymlog.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

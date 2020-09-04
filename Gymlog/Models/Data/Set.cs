@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Gymlog.Models
+namespace Gymlog.Models.Data
 {
     public class Set
     {

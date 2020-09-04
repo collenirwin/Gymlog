@@ -1,4 +1,5 @@
 ﻿using Gymlog.Models;
+using Gymlog.Models.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

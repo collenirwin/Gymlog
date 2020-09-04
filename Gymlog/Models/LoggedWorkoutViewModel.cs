@@ -1,4 +1,6 @@
-﻿namespace Gymlog.Models
+﻿using Gymlog.Models.Data;
+
+namespace Gymlog.Models
 {
     public class LoggedWorkoutViewModel
     {
