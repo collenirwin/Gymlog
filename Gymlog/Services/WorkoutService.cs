@@ -2,7 +2,6 @@
 using Gymlog.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,11 +10,12 @@ namespace Gymlog.Services
     public class WorkoutService
     {
         private readonly ApplicationDbContext _context;
-        
+
         public WorkoutService(ApplicationDbContext context)
         {
             _context = context;
         }
+
         public async Task<bool> AddWorkout(Workout workout, ApplicationUser user)
         {
             int postCount = 0;
@@ -24,6 +24,7 @@ namespace Gymlog.Services
             _context.Workouts.Add(workout);
             postCount++;
             int count = 1;
+
             foreach (var workoutExercise in workout.WorkoutExercises)
             {
                 workoutExercise.ExerciseNumber = count++;
@@ -40,21 +41,23 @@ namespace Gymlog.Services
                 }
             }
 
-            return await saveAsync(postCount);
+            return await SaveAsync(postCount);
         }
 
-        private async Task<bool> saveAsync(int expected)
+        private async Task<bool> SaveAsync(int expected)
         {
             int result = await _context.SaveChangesAsync(); // pushes to DB
             return result == expected;
         }
+
         public async Task<Workout[]> ListWorkouts(ApplicationUser user)
         {
             return await _context.Workouts
                 .Where((workout) => user.Id == workout.UserId)
                 .ToArrayAsync();
         }
-        public async Task<Workout> getWorkout(string id)
+
+        public async Task<Workout> GetWorkout(string id)
         {
             var workout = await _context.Workouts
                 .FirstOrDefaultAsync((w) => w.Id == id);
@@ -62,7 +65,7 @@ namespace Gymlog.Services
             workout.WorkoutExercises = await _context.WorkoutExercises
                 .Where((w) => w.WorkoutId == workout.Id).OrderBy((x) => x.ExerciseNumber).ToListAsync();
 
-            foreach(var workoutExercise in workout.WorkoutExercises)
+            foreach (var workoutExercise in workout.WorkoutExercises)
             {
                 workoutExercise.Sets = await _context.Sets
                     .Where((s) => s.WorkoutExerciseId == workoutExercise.Id).OrderBy((x) => x.SetNumber).ToListAsync();
@@ -70,14 +73,16 @@ namespace Gymlog.Services
 
             return workout;
         }
-        public async Task<bool> LogWorkout(ApplicationUser user,LoggedWorkout model)
+
+        public async Task<bool> LogWorkout(ApplicationUser user, LoggedWorkout model)
         {
             model.Id = Guid.NewGuid().ToString();
             model.UserId = user.Id;
             model.Date = DateTime.Now;
             _context.LoggedWorkouts.Add(model);
-            return await saveAsync(1);
+            return await SaveAsync(1);
         }
+
         public async Task<LoggedWorkout[]> ListLoggedWorkouts(ApplicationUser user)
         {
             return await _context.LoggedWorkouts
@@ -85,12 +90,14 @@ namespace Gymlog.Services
                 .OrderByDescending((workout) => workout.Date)
                 .ToArrayAsync();
         }
-        public async Task<LoggedWorkout> getLoggedWorkout(string id)
+
+        public async Task<LoggedWorkout> GetLoggedWorkout(string id)
         {
             var workout = await _context.LoggedWorkouts
                 .FirstOrDefaultAsync((w) => w.Id == id);
             return workout;
         }
+
         public async Task<Workout[]> ListDefaultWorkouts(ApplicationUser user)
         {
             return await _context.Workouts
@@ -99,4 +106,3 @@ namespace Gymlog.Services
         }
     }
 }
-

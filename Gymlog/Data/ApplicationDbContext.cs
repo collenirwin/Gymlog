@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Gymlog.Models;
+﻿using Gymlog.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,10 +11,12 @@ namespace Gymlog.Data
         public DbSet<WorkoutExercise> WorkoutExercises { get; set; }
         public DbSet<Set> Sets { get; set; }
         public DbSet<LoggedWorkout> LoggedWorkouts { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -78,7 +77,7 @@ namespace Gymlog.Data
                 new WorkoutExercise { Id = "3", WorkoutId = "1", ExerciseName = "BENT OVER BARBELL ROWS", ExerciseNumber = 3 },
                 new WorkoutExercise { Id = "4", WorkoutId = "2", ExerciseName = "SQUAT", ExerciseNumber = 1 },
                 new WorkoutExercise { Id = "5", WorkoutId = "2", ExerciseName = "STANDING OVERHEAD BARBELL PRESS", ExerciseNumber = 2 },
-                new WorkoutExercise { Id = "6", WorkoutId = "2", ExerciseName = "DEADLIFT", ExerciseNumber = 3});
+                new WorkoutExercise { Id = "6", WorkoutId = "2", ExerciseName = "DEADLIFT", ExerciseNumber = 3 });
 
             builder.Entity<Set>().HasData(
                 new Set { Id = "1", SetNumber = 1, Reps = 5, Comments = "", WorkoutExerciseId = "1" },
@@ -113,6 +112,5 @@ namespace Gymlog.Data
 
                 new Set { Id = "26", SetNumber = 1, Reps = 5, Comments = "", WorkoutExerciseId = "6" });
         }
-
     }
 }

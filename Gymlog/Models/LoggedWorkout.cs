@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Gymlog.Models
 {
@@ -12,10 +9,11 @@ namespace Gymlog.Models
         public string UserId { get; set; }
         public string WorkoutId { get; set; }
         public string WorkoutName { get; set; }
-        
+
 
         [NotMapped]
         public string[] Notes { get; set; }
+
         public string NotesString
         {
             get => string.Join("`", Notes);

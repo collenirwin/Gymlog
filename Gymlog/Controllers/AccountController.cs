@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Gymlog.Models;
-using Gymlog.Services;
+﻿using Gymlog.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Gymlog.Controllers
 {
@@ -54,12 +50,13 @@ namespace Gymlog.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: true);
-                    return redirectToLocal(returnUrl);
+                    return RedirectToLocal(returnUrl);
                 }
-                addErrors(result);
 
+                AddErrors(result);
             }
-            // pass in model to redisplay form with users perviously enterered info (username,email,etc) after a failure
+            // pass in model to redisplay form with users perviously enterered info
+            // (username,email,etc) after a failure
             return View(model);
         }
 
@@ -71,6 +68,7 @@ namespace Gymlog.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home"); // bring us home
             }
+
             // clear cookie to ensure clean login
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
@@ -98,7 +96,6 @@ namespace Gymlog.Controllers
                     {
                         userName = "";
                     }
-                    //userName = user?.UserName ?? ""; // set username to user.UserName if user.UserName != null else make ""
                 }
 
                 if (userName == "")
@@ -112,7 +109,7 @@ namespace Gymlog.Controllers
 
                     if (result.Succeeded)
                     {
-                        return redirectToLocal(returnUrl);
+                        return RedirectToLocal(returnUrl);
                     }
                     else if (result.IsLockedOut)
                     {
@@ -124,6 +121,7 @@ namespace Gymlog.Controllers
                     }
                 }
             }
+
             return View(model);
         }
 
@@ -141,7 +139,7 @@ namespace Gymlog.Controllers
         {
             return View();
         }
-        
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPassword()
@@ -155,15 +153,17 @@ namespace Gymlog.Controllers
         {
             return View();
         }
-        
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ResetPassword(string token = null)
         {
             if (token == null)
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home"); // if they go to the page directly send em' home
+                // if they go to the page directly send em' home
+                return RedirectToAction(nameof(HomeController.Index), "Home");
             }
+
             var model = new ResetPasswordViewModel { Token = token };
             return View(model);
         }
@@ -177,18 +177,21 @@ namespace Gymlog.Controllers
             {
                 return View(model);
             }
+
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
                 return RedirectToAction(nameof(ResetPasswordConfirmation));
             }
+
             var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
             if (result.Succeeded)
             {
                 return RedirectToAction(nameof(ResetPasswordConfirmation));
             }
-            addErrors(result);
+
+            AddErrors(result);
             return View();
         }
 
@@ -199,7 +202,7 @@ namespace Gymlog.Controllers
             return View();
         }
 
-        private IActionResult redirectToLocal(string url)
+        private IActionResult RedirectToLocal(string url)
         {
             if (Url.IsLocalUrl(url))
             {
@@ -210,7 +213,8 @@ namespace Gymlog.Controllers
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
         }
-        private string generateTokenUrl(string actionName,string userId, string token,string scheme)
+
+        private string GenerateTokenUrl(string actionName, string userId, string token, string scheme)
         {
             return Url.Action(
                 action: actionName,
@@ -218,7 +222,8 @@ namespace Gymlog.Controllers
                 values: new { userId, token },
                 protocol: scheme);
         }
-        private void addErrors(IdentityResult result)
+
+        private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
             {

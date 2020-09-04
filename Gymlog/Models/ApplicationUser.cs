@@ -4,6 +4,5 @@ namespace Gymlog.Models
 {
     public class ApplicationUser : IdentityUser
     {
-
     }
 }

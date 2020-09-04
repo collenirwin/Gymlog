@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Gymlog.Models;
+﻿using Gymlog.Models;
 using Gymlog.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Gymlog.Controllers
 {
@@ -19,7 +16,7 @@ namespace Gymlog.Controllers
         {
             _userManager = userManager;
             _exerciseService = exerciseService;
-        } 
+        }
 
         public IActionResult Index()
         {
@@ -31,16 +28,14 @@ namespace Gymlog.Controllers
         public async Task<IActionResult> Exercise(string id)
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            var exercise = await _exerciseService.getExercise(id);
+            var exercise = await _exerciseService.GetExercise(id);
 
             if (exercise.UserId == currentUser.Id)
             {
                 return View(exercise);
             }
-            else
-            {
-                return Challenge();
-            }
+
+            return Challenge();
         }
         [HttpPost]
         [Authorize]
@@ -50,13 +45,11 @@ namespace Gymlog.Controllers
 
             if (exercise.UserId == currentUser.Id)
             {
-                await _exerciseService.updateExercise(exercise);
-                return RedirectToAction("Exercises","Saved");
+                await _exerciseService.UpdateExercise(exercise);
+                return RedirectToAction("Exercises", "Saved");
             }
-            else
-            {
-                return Challenge();
-            }
+
+            return Challenge();
         }
     }
 }

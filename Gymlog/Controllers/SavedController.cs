@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Gymlog.Models;
+﻿using Gymlog.Models;
 using Gymlog.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Gymlog.Controllers
 {
@@ -16,7 +14,10 @@ namespace Gymlog.Controllers
         private readonly WorkoutService _workoutService;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public SavedController(ExerciseService exerciseService, WorkoutService workoutService, UserManager<ApplicationUser> userManager)
+        public SavedController(
+            ExerciseService exerciseService,
+            WorkoutService workoutService,
+            UserManager<ApplicationUser> userManager)
         {
             _workoutService = workoutService;
             _exerciseService = exerciseService;
@@ -55,12 +56,13 @@ namespace Gymlog.Controllers
                 return Challenge();
             }
 
-            var workout = await _workoutService.getWorkout(id);
+            var workout = await _workoutService.GetWorkout(id);
 
             if (currentUser.Id == workout.UserId || null == workout.UserId)
             {
                 return View(workout);
             }
+
             return RedirectToAction(nameof(HomeController.Index), "Home");
 
         }
@@ -75,18 +77,19 @@ namespace Gymlog.Controllers
                 return Challenge();
             }
 
-            var workout = await _workoutService.getWorkout(id);
+            var workout = await _workoutService.GetWorkout(id);
 
             if (currentUser.Id == workout.UserId || null == workout.UserId)
             {
                 return View(workout);
             }
+
             return RedirectToAction(nameof(HomeController.Index), "Home");
 
         }
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> LogWorkout(string Id,string[] RepsCompleted,string[] Weight, string[] Notes)
+        public async Task<IActionResult> LogWorkout(string Id, string[] RepsCompleted, string[] Weight, string[] Notes)
         {
             var currentUser = await _userManager.GetUserAsync(User);
 
@@ -94,7 +97,8 @@ namespace Gymlog.Controllers
             {   // make them login
                 return Challenge();
             }
-            var workout = await _workoutService.getWorkout(Id);
+
+            var workout = await _workoutService.GetWorkout(Id);
 
             if (currentUser.Id == workout.UserId || null == workout.UserId)
             {
@@ -106,21 +110,16 @@ namespace Gymlog.Controllers
                 model.Notes = Notes;
                 await _workoutService.LogWorkout(currentUser, model);
             }
+
             return RedirectToAction(nameof(HomeController.Index), "Home");
 
         }
-        /*[HttpPost]
-        public IActionResult Exercise()
-        {
-            return View();
-        }*/
 
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Exercises()
         {
             var currentUser = await _userManager.GetUserAsync(User);
-
             var exercises = await _exerciseService.ListExercises(currentUser);
             return View(exercises);
         }
@@ -130,7 +129,6 @@ namespace Gymlog.Controllers
         public async Task<IActionResult> LoggedWorkouts()
         {
             var currentUser = await _userManager.GetUserAsync(User);
-
             var loggedWorkouts = await _workoutService.ListLoggedWorkouts(currentUser);
             return View(loggedWorkouts);
         }
@@ -145,18 +143,21 @@ namespace Gymlog.Controllers
             {   // make them login
                 return Challenge();
             }
-            
-            var loggedWorkout = await _workoutService.getLoggedWorkout(Id);
-            var workout = await _workoutService.getWorkout(loggedWorkout.WorkoutId);
 
-            LoggedWorkoutViewModel LoggedWorkoutViewModel = new LoggedWorkoutViewModel();
-            LoggedWorkoutViewModel.LoggedWorkout = loggedWorkout;
-            LoggedWorkoutViewModel.Workout = workout;
+            var loggedWorkout = await _workoutService.GetLoggedWorkout(Id);
+            var workout = await _workoutService.GetWorkout(loggedWorkout.WorkoutId);
+
+            LoggedWorkoutViewModel LoggedWorkoutViewModel = new LoggedWorkoutViewModel
+            {
+                LoggedWorkout = loggedWorkout,
+                Workout = workout
+            };
 
             if (currentUser.Id == loggedWorkout.UserId)
             {
                 return View(LoggedWorkoutViewModel);
             }
+
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
@@ -165,17 +166,15 @@ namespace Gymlog.Controllers
         public async Task<IActionResult> DeleteExercise(string exericseId)
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            var exercise = await _exerciseService.getExercise(exericseId);
+            var exercise = await _exerciseService.GetExercise(exericseId);
 
             if (exercise.UserId == currentUser.Id)
             {
-                await _exerciseService.deleteExercise(exercise);
+                await _exerciseService.DeleteExercise(exercise);
                 return RedirectToAction("Exercises");
             }
-            else
-            {
-                return Challenge();
-            }
+
+            return Challenge();
         }
     }
 }

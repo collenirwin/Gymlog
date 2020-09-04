@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Gymlog.Models;
+﻿using Gymlog.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Gymlog.Controllers
 {
     public class HomeController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        public HomeController( UserManager<ApplicationUser> userManager)
+        public HomeController(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
         }
@@ -20,10 +17,12 @@ namespace Gymlog.Controllers
         public async Task<IActionResult> Index()
         {
             var currentUser = await _userManager.GetUserAsync(User);
+
             if (currentUser == null)
             {   // make them login
                 return Challenge();
             }
+
             return RedirectToAction(nameof(SavedController.Workouts), "Saved");
         }
 
